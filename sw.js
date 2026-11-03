@@ -1,5 +1,5 @@
 // 离线缓存：第一次联网打开后，以后没网也能用。数据更新时 build.py 会改 VERSION。
-const VERSION = '202611032004';
+const VERSION = '202611032007';
 const CACHE = 'avi-en-' + VERSION;
 const FILES = ['./', 'index.html', 'app.js', 'data.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 

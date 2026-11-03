@@ -158,7 +158,11 @@
   }
 
   // ---------- 出题 ----------
-  function buildSession(keys, count) {
+  // 薄弱程度：错误率高、错得多、最近没连对的排前面；没练过的居中，已掌握的最后
+  function weakness(k) { const s = stat(k), n = s.right + s.wrong; return n ? (s.wrong / n) * 4 + Math.min(s.wrong, 5) - s.streak * 1.5 : 0.5; }
+  const byWeak = (keys) => keys.map((k) => [weakness(k) + Math.random() * 0.1, k]).sort((a, b) => b[0] - a[0]).map((x) => x[1]);
+  function buildSession(keys, count, weakFirst) {
+    if (weakFirst) { const r = byWeak(keys); return count ? r.slice(0, count) : r; }
     const scored = keys.map((k) => {
       const s = stat(k);
       let p = Math.random();
@@ -209,7 +213,7 @@
 
   function unitSheet(k) {
     const u = UNITS[k - 1];
-    const pref = Object.assign({ types: unitTypes(u), mixVocab: u.phase >= 2 && u.phase < 4, books: u.books || [], count: 20 }, store.prefs['u' + k] || {});
+    const pref = Object.assign({ types: unitTypes(u), mixVocab: u.phase >= 2 && u.phase < 4, books: u.books || [], count: 20, weak: false }, store.prefs['u' + k] || {});
     const miss = unitMissing(u);
     let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>' + u.title + '</h1></header>';
     html += '<p class="sub pad">' + u.desc + '</p>';
@@ -219,21 +223,23 @@
     if (u.phase === 2) html += '<div class="field"><div class="label">句子范围</div><div class="chips">' + ['AE', 'AV'].map((b) => chip('book', b, b, pref.books.includes(b))).join('') + '</div></div>';
     if (u.phase === 2 || u.phase === 3) html += '<label class="switch"><input type="checkbox" name="mix"' + (pref.mixVocab ? ' checked' : '') + '><span>混入整本词汇（优先出常错的词）</span></label>';
     html += '<div class="field"><div class="label">题数</div><div class="chips">' + [10, 20, 50, 0].map((n) => radio('count', n, n ? n + ' 题' : '全部', pref.count === n)).join('') + '</div></div>';
+    html += '<label class="switch"><input type="checkbox" name="weak"' + (pref.weak ? ' checked' : '') + '><span>薄弱词优先（错得最多的先出）</span></label>';
     html += '<p class="count" id="cnt"></p>';
     html += '<button type="submit" class="btn primary">开始练习</button></form>';
     html += '<button class="btn ghost wide" data-browse="' + k + '">浏览本单元全部内容</button>';
     const ex = examStats(k);
     html += '<div class="card"><div class="label">模拟考试</div><p class="sub">限时（每题 ' + SEC_PER_Q + ' 秒），中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
       '<div class="field"><div class="chips">' + [20, 50, 100].map((n) => radio('exn', n, n + ' 题', n === 50)).join('') + '</div></div>' +
+      '<label class="switch"><input type="checkbox" id="exweak"><span>薄弱词优先（多抽常错的题）</span></label>' +
       '<button class="btn primary" id="exam">开始模拟考试</button></div>';
     render(html);
     document.getElementById('exam').onclick = (e) => {
-      if (startExam(k, +document.querySelector('input[name="exn"]:checked').value) === false) e.currentTarget.textContent = '这个单元还没有录入题目';
+      if (startExam(k, +document.querySelector('input[name="exn"]:checked').value, document.getElementById('exweak').checked) === false) e.currentTarget.textContent = '这个单元还没有录入题目';
     };
     const form = document.getElementById('opt');
     const read = () => {
       const fd = new FormData(form);
-      return { types: fd.getAll('type'), books: u.phase === 2 ? fd.getAll('book') : u.books, mixVocab: !!fd.get('mix'), count: +fd.get('count') };
+      return { types: fd.getAll('type'), books: u.phase === 2 ? fd.getAll('book') : u.books, mixVocab: !!fd.get('mix'), count: +fd.get('count'), weak: !!fd.get('weak') };
     };
     const upd = () => {
       const o = read(); const n = keysFor(unitContent(u, o), o.types).length;
@@ -251,12 +257,10 @@
         // 整本词汇是复习，本次新句子至少占六成
         const core = keysFor({ words: [], sents: c.sents }, o.types);
         const extra = keysFor({ words: c.words, sents: [] }, o.types);
-        if (!o.count) session = shuffle(buildSession(core, 0).concat(buildSession(extra, 0)));
-        else {
-          const n1 = Math.min(core.length, Math.ceil(o.count * 0.6));
-          session = shuffle(buildSession(core, n1).concat(buildSession(extra, o.count - n1)));
-        }
-      } else session = buildSession(keys, o.count);
+        const n1 = o.count ? Math.min(core.length, Math.ceil(o.count * 0.6)) : 0;
+        session = buildSession(core, n1, o.weak).concat(buildSession(extra, o.count ? o.count - n1 : 0, o.weak));
+        session = o.weak ? byWeak(session) : shuffle(session);
+      } else session = buildSession(keys, o.count, o.weak);
       startQuiz(session, u.title, () => unitSheet(k));
     });
   }
@@ -268,16 +272,17 @@
     html += '<div class="field"><div class="label">选择单元</div><div class="chips">' + UNITS.slice(0, 24).map((u) => chip('unit', u.k, '第' + u.k + '次', false)).join('') + '</div></div>';
     html += '<div class="field"><div class="label">题型</div><div class="chips">' + Object.keys(TYPES).map((t) => chip('type', t, TYPES[t].label, t !== 's_c2e')).join('') + '</div></div>';
     html += '<div class="field"><div class="label">题数</div><div class="chips">' + [20, 50, 100].map((n) => radio('count', n, n + ' 题', n === 50)).join('') + '</div></div>';
+    html += '<label class="switch"><input type="checkbox" name="weak"><span>薄弱词优先（错得最多的先出）</span></label>';
     html += '<p class="count" id="cnt"></p><button class="btn primary">开始</button></form>';
     render(html);
     const form = document.getElementById('mix');
     const keysNow = () => {
       const fd = new FormData(form); const types = fd.getAll('type'); const set = new Set();
       fd.getAll('unit').forEach((k) => { const u = UNITS[k - 1]; keysFor(unitContent(u, { books: u.books }), types.filter((t) => t !== 's_c2e' || u.zh2enSent)).forEach((x) => set.add(x)); });
-      return { keys: [...set], count: +fd.get('count') };
+      return { keys: [...set], count: +fd.get('count'), weak: !!fd.get('weak') };
     };
     form.addEventListener('change', () => { document.getElementById('cnt').textContent = '共 ' + keysNow().keys.length + ' 道题可选'; });
-    form.addEventListener('submit', (e) => { e.preventDefault(); const r = keysNow(); if (!r.keys.length) { document.getElementById('cnt').innerHTML = '<span class="warn">请先选择单元和题型</span>'; return; } startQuiz(buildSession(r.keys, r.count), '混合复习', mixSheet); });
+    form.addEventListener('submit', (e) => { e.preventDefault(); const r = keysNow(); if (!r.keys.length) { document.getElementById('cnt').innerHTML = '<span class="warn">请先选择单元和题型</span>'; return; } startQuiz(buildSession(r.keys, r.count, r.weak), '混合复习', mixSheet); });
   }
 
   function wrongBook() {
@@ -324,31 +329,31 @@
     const r = store.exams.filter((e) => e.k === k);
     return { n: r.length, best: r.length ? Math.max(...r.map((e) => e.score)) : 0 };
   }
-  // 随机抽题（不按熟练度加权），同一个词/句尽量只出一次
-  function pick(keys, m) {
+  // 随机抽题（勾了薄弱词优先就先抽常错的），同一个词/句尽量只出一次
+  function pick(keys, m, weak) {
     const out = [], rest = [], seen = new Set();
-    shuffle(keys).forEach((key) => { const id = key.slice(6); if (seen.has(id)) rest.push(key); else { seen.add(id); out.push(key); } });
+    (weak ? byWeak(keys) : shuffle(keys)).forEach((key) => { const id = key.slice(6); if (seen.has(id)) rest.push(key); else { seen.add(id); out.push(key); } });
     return out.concat(rest).slice(0, m);
   }
-  function examKeys(u, n) {
+  function examKeys(u, n, weak) {
     const c = unitContent(u, { books: u.books, mixVocab: u.phase >= 2 && u.phase < 4 });
     const types = unitTypes(u);
     if (u.phase >= 2 && u.phase < 4 && c.words.length && c.sents.length) {
       // 和练习一样：本次新句子至少占六成，其余是整本词汇
       const core = keysFor({ words: [], sents: c.sents }, types), extra = keysFor({ words: c.words, sents: [] }, types);
       const n1 = Math.min(core.length, Math.ceil(n * 0.6));
-      return shuffle(pick(core, n1).concat(pick(extra, n - n1)));
+      return shuffle(pick(core, n1, weak).concat(pick(extra, n - n1, weak)));
     }
-    return pick(keysFor(c, types), n);
+    return shuffle(pick(keysFor(c, types), n, weak));
   }
 
   let X = null;
-  function startExam(k, n) {
+  function startExam(k, n, weak) {
     const u = UNITS[k - 1];
-    const qs = examKeys(u, n).map(makeQuestion).filter(Boolean);
+    const qs = examKeys(u, n, weak).map(makeQuestion).filter(Boolean);
     if (!qs.length) return false;
     const now = Date.now();
-    X = { k, title: u.title + ' 模拟考', qs, picks: qs.map(() => null), i: 0, start: now, end: now + qs.length * SEC_PER_Q * 1000 };
+    X = { k, weak, title: u.title + ' 模拟考' + (weak ? '（薄弱词）' : ''), qs, picks: qs.map(() => null), i: 0, start: now, end: now + qs.length * SEC_PER_Q * 1000 };
     X.timer = setInterval(tick, 1000);
     examQ();
   }
@@ -401,7 +406,7 @@
       if (ok) { right++; s.right++; s.streak++; } else { s.wrong++; s.streak = 0; wrong.push({ q, pick: p }); }
       s.t = Date.now(); store.stats[q.key] = s;
     });
-    const rec = { k: x.k, title: x.title, t: Date.now(), n: x.qs.length, right, score: Math.round((right / x.qs.length) * 100), secs: Math.round((Math.min(Date.now(), x.end) - x.start) / 1000) };
+    const rec = { k: x.k, weak: !!x.weak, title: x.title, t: Date.now(), n: x.qs.length, right, score: Math.round((right / x.qs.length) * 100), secs: Math.round((Math.min(Date.now(), x.end) - x.start) / 1000) };
     store.exams.push(rec);
     if (store.exams.length > 200) store.exams.splice(0, store.exams.length - 200);
     save();
@@ -424,7 +429,7 @@
     render(html);
     const r = document.getElementById('redo');
     if (r) r.onclick = () => startQuiz(shuffle(wrong.map((w) => w.q.key)), '考试错题', () => unitSheet(rec.k));
-    document.getElementById('again').onclick = () => startExam(rec.k, rec.n);
+    document.getElementById('again').onclick = () => startExam(rec.k, rec.n, rec.weak);
   }
   function examLog() {
     if (!store.exams.length) return home();
