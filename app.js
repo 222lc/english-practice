@@ -9,7 +9,7 @@
   function load() {
     try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
   }
-  const store = Object.assign({ stats: {}, prefs: {} }, load());
+  const store = Object.assign({ stats: {}, prefs: {}, exams: [], fav: {} }, load());
   function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
   // ---------- 题库条目 ----------
@@ -180,20 +180,26 @@
   }
   const canSpeak = 'speechSynthesis' in window;
   function render(html) { $app.innerHTML = html; window.scrollTo(0, 0); }
+  const star = (id) => '<button class="star" data-fav="' + esc(id) + '" aria-label="收藏">' + (store.fav[id] ? '★' : '☆') + '</button>';
+  const fmt = (ms) => { const s = Math.max(0, Math.round(ms / 1000)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+  const day = (t) => { const d = new Date(t); return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
 
   const PHASES = { 1: '第一阶段 · 词汇表', 2: '第二阶段 · AE/AV 句子 + 整本词汇', 3: '第三阶段 · AI 句子 + 整本词汇（加考句子中译英）', 4: '总决赛' };
 
   function home() {
     const wrongN = Object.keys(store.stats).filter(isWrong).length;
+    const favN = Object.keys(store.fav).filter((id) => items[id]).length;
     let html = '<header class="top"><h1>航空技术英语</h1><p class="sub">按考试场次练习 · 进度保存在本机</p></header>';
-    html += '<div class="actions"><button class="btn ghost" data-go="wrong"' + (wrongN ? '' : ' disabled') + '>错题本 <b>' + wrongN + '</b></button><button class="btn ghost" data-go="mix">多单元混合复习</button></div>';
+    html += '<div class="actions"><button class="btn ghost" data-go="wrong"' + (wrongN ? '' : ' disabled') + '>错题本 <b>' + wrongN + '</b></button><button class="btn ghost" data-go="mix">多单元混合复习</button>' +
+      '<button class="btn ghost" data-go="fav"' + (favN ? '' : ' disabled') + '>收藏 <b>' + favN + '</b></button><button class="btn ghost" data-go="exams"' + (store.exams.length ? '' : ' disabled') + '>考试记录 <b>' + store.exams.length + '</b></button></div>';
     let phase = 0;
     UNITS.forEach((u) => {
       if (u.phase !== phase) { phase = u.phase; html += '<h2 class="phase">' + PHASES[phase] + '</h2>'; }
-      const pr = unitProgress(u); const miss = unitMissing(u);
+      const pr = unitProgress(u); const miss = unitMissing(u); const ex = examStats(u.k);
       const pct = pr.total ? Math.round((pr.done / pr.total) * 100) : 0;
       html += '<button class="unit" data-unit="' + u.k + '"><div class="u-head"><span class="u-title">' + u.title + '</span><span class="u-pct">' + (pr.total ? pct + '%' : '') + '</span></div>' +
         '<div class="u-desc">' + u.desc + '</div>' +
+        (ex.n ? '<div class="u-exam">模拟考 最高 ' + ex.best + ' 分 · 共 ' + ex.n + ' 次</div>' : '') +
         (pr.total ? '<div class="bar"><i style="width:' + pct + '%"></i></div>' : '') +
         (miss.length ? '<div class="u-miss">尚未录入：' + miss.join('、') + '</div>' : '') + '</button>';
     });
@@ -216,7 +222,14 @@
     html += '<p class="count" id="cnt"></p>';
     html += '<button type="submit" class="btn primary">开始练习</button></form>';
     html += '<button class="btn ghost wide" data-browse="' + k + '">浏览本单元全部内容</button>';
+    const ex = examStats(k);
+    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">限时（每题 ' + SEC_PER_Q + ' 秒），中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
+      '<div class="field"><div class="chips">' + [20, 50, 100].map((n) => radio('exn', n, n + ' 题', n === 50)).join('') + '</div></div>' +
+      '<button class="btn primary" id="exam">开始模拟考试</button></div>';
     render(html);
+    document.getElementById('exam').onclick = (e) => {
+      if (startExam(k, +document.querySelector('input[name="exn"]:checked').value) === false) e.currentTarget.textContent = '这个单元还没有录入题目';
+    };
     const form = document.getElementById('opt');
     const read = () => {
       const fd = new FormData(form);
@@ -274,7 +287,7 @@
     html += '<p class="sub pad">共 ' + keys.length + ' 题。连续答对 2 次自动移出。</p><button class="btn primary wide" id="go">练习全部错题</button><div class="list">';
     keys.sort((a, b) => stat(b).wrong - stat(a).wrong).forEach((k) => {
       const it = items[k.slice(6)];
-      html += '<div class="row"><div class="row-en">' + esc(it.en) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + TYPES[k.slice(0, 5)].label + ' · 错 ' + stat(k).wrong + ' 次 · ' + it.src + '</div></div>';
+      html += '<div class="row"><div class="row-head"><div class="row-en">' + esc(it.en) + '</div>' + star(it.id) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + TYPES[k.slice(0, 5)].label + ' · 错 ' + stat(k).wrong + ' 次 · ' + it.src + '</div></div>';
     });
     render(html + '</div>');
     document.getElementById('go').onclick = () => startQuiz(buildSession(keys, 0), '错题本', wrongBook);
@@ -283,9 +296,150 @@
   function browse(k) {
     const u = UNITS[k - 1]; const c = unitContent(u, { books: u.books, mixVocab: false });
     let html = '<header class="bar-top"><button class="back" data-unit="' + k + '">‹ 返回</button><h1>' + u.title + ' 内容</h1></header><div class="list">';
-    const sec = (title, ids) => { if (!ids.length) return; html += '<h2 class="phase">' + title + '（' + ids.length + '）</h2>'; ids.forEach((id) => { const it = items[id]; html += '<div class="row"><div class="row-en">' + (canSpeak ? '<button class="say" data-say="' + esc(it.en) + '">🔊</button>' : '') + esc(it.en) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + it.src + '</div></div>'; }); };
+    const sec = (title, ids) => { if (!ids.length) return; html += '<h2 class="phase">' + title + '（' + ids.length + '）</h2>'; ids.forEach((id) => { const it = items[id]; html += '<div class="row"><div class="row-head"><div class="row-en">' + (canSpeak ? '<button class="say" data-say="' + esc(it.en) + '">🔊</button>' : '') + esc(it.en) + '</div>' + star(id) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + it.src + '</div></div>'; }); };
     sec('单词', c.words); sec('句子', c.sents);
     if (!c.words.length && !c.sents.length) html += '<p class="note pad">这个单元的资料还没录入。</p>';
+    render(html + '</div>');
+  }
+
+  function favBook() {
+    const ids = Object.keys(store.fav).filter((id) => items[id]).sort((a, b) => store.fav[b] - store.fav[a]);
+    if (!ids.length) return home();
+    let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>收藏</h1></header>';
+    html += '<p class="sub pad">共 ' + ids.length + ' 条。点 ★ 取消收藏。</p><button class="btn primary wide" id="go">练习全部收藏</button><div class="list">';
+    ids.forEach((id) => {
+      const it = items[id];
+      html += '<div class="row"><div class="row-head"><div class="row-en">' + esc(it.en) + '</div>' + star(id) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + it.src + '</div></div>';
+    });
+    render(html + '</div>');
+    document.getElementById('go').onclick = () => {
+      const keys = ids.filter((id) => store.fav[id]).flatMap((id) => (items[id].kind === 'word' ? ['w_e2c|' + id, 'w_c2e|' + id] : ['s_e2c|' + id]));
+      if (keys.length) startQuiz(buildSession(keys, 0), '收藏', favBook);
+    };
+  }
+
+  // ---------- 模拟考试 ----------
+  const SEC_PER_Q = 30;
+  function examStats(k) {
+    const r = store.exams.filter((e) => e.k === k);
+    return { n: r.length, best: r.length ? Math.max(...r.map((e) => e.score)) : 0 };
+  }
+  // 随机抽题（不按熟练度加权），同一个词/句尽量只出一次
+  function pick(keys, m) {
+    const out = [], rest = [], seen = new Set();
+    shuffle(keys).forEach((key) => { const id = key.slice(6); if (seen.has(id)) rest.push(key); else { seen.add(id); out.push(key); } });
+    return out.concat(rest).slice(0, m);
+  }
+  function examKeys(u, n) {
+    const c = unitContent(u, { books: u.books, mixVocab: u.phase >= 2 && u.phase < 4 });
+    const types = unitTypes(u);
+    if (u.phase >= 2 && u.phase < 4 && c.words.length && c.sents.length) {
+      // 和练习一样：本次新句子至少占六成，其余是整本词汇
+      const core = keysFor({ words: [], sents: c.sents }, types), extra = keysFor({ words: c.words, sents: [] }, types);
+      const n1 = Math.min(core.length, Math.ceil(n * 0.6));
+      return shuffle(pick(core, n1).concat(pick(extra, n - n1)));
+    }
+    return pick(keysFor(c, types), n);
+  }
+
+  let X = null;
+  function startExam(k, n) {
+    const u = UNITS[k - 1];
+    const qs = examKeys(u, n).map(makeQuestion).filter(Boolean);
+    if (!qs.length) return false;
+    const now = Date.now();
+    X = { k, title: u.title + ' 模拟考', qs, picks: qs.map(() => null), i: 0, start: now, end: now + qs.length * SEC_PER_Q * 1000 };
+    X.timer = setInterval(tick, 1000);
+    examQ();
+  }
+  function tick() {
+    if (!X) return;
+    const left = X.end - Date.now();
+    const el = document.getElementById('timer');
+    if (el) { el.textContent = fmt(left); el.classList.toggle('warn', left < 60000); }
+    if (left <= 0) submitExam();
+  }
+  function examQ() {
+    const q = X.qs[X.i], n = X.qs.length, done = X.picks.filter((p) => p !== null).length, left = X.end - Date.now();
+    let html = '<header class="bar-top"><button class="back" id="xquit">‹ 退出</button><h1>' + esc(X.title) + '</h1><span class="prog timer' + (left < 60000 ? ' warn' : '') + '" id="timer">' + fmt(left) + '</span></header>';
+    html += '<div class="bar thin"><i style="width:' + (done / n) * 100 + '%"></i></div>';
+    html += '<div class="q card"><div class="q-type">第 ' + (X.i + 1) + ' / ' + n + ' 题 · ' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
+      (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
+    q.options.forEach((o, j) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + (X.picks[X.i] === j ? ' sel' : '') + '" data-xopt="' + j + '"><span class="k">' + 'ABCD'[j] + '</span><span>' + esc(o) + '</span></button>'; });
+    html += '</div><div class="xnav"><button class="btn" data-xgo="' + (X.i - 1) + '"' + (X.i ? '' : ' disabled') + '>上一题</button>' +
+      (X.i < n - 1 ? '<button class="btn" data-xgo="' + (X.i + 1) + '">下一题</button>' : '<button class="btn primary xsubmit">交卷</button>') + '</div>';
+    html += '<div class="label pad">答题卡（已答 ' + done + ' / ' + n + '）</div><div class="sheet">' +
+      X.qs.map((_, j) => '<button class="cell' + (X.picks[j] !== null ? ' done' : '') + (j === X.i ? ' cur' : '') + '" data-xgo="' + j + '">' + (j + 1) + '</button>').join('') + '</div>';
+    html += '<button class="btn ghost wide xsubmit">交卷</button>';
+    render(html);
+    document.getElementById('xquit').onclick = (e) => {
+      const b = e.currentTarget;
+      if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = '再点一次退出（不计分）'; b.classList.add('warn'); return; }
+      clearInterval(X.timer); const k = X.k; X = null; unitSheet(k);
+    };
+    document.querySelectorAll('.xsubmit').forEach((b) => (b.onclick = () => {
+      const miss = X.picks.filter((p) => p === null).length;
+      if (miss && !b.dataset.armed) { b.dataset.armed = '1'; b.textContent = '还有 ' + miss + ' 题没答，再点一次交卷'; b.classList.add('danger'); return; }
+      submitExam();
+    }));
+  }
+  function examPick(j) {
+    X.picks[X.i] = j;
+    const x = X;
+    if (X.i < X.qs.length - 1) { examQ(); setTimeout(() => { if (X === x && x.picks[x.i] === j) { x.i++; examQ(); } }, 250); }
+    else examQ();
+  }
+  function submitExam() {
+    if (!X) return;
+    clearInterval(X.timer);
+    const x = X; X = null;
+    const prev = examStats(x.k);
+    let right = 0; const wrong = [];
+    x.qs.forEach((q, j) => {
+      const p = x.picks[j]; const ok = p !== null && q.options[p] === q.answer;
+      const s = Object.assign({ right: 0, wrong: 0, streak: 0 }, store.stats[q.key]);
+      if (ok) { right++; s.right++; s.streak++; } else { s.wrong++; s.streak = 0; wrong.push({ q, pick: p }); }
+      s.t = Date.now(); store.stats[q.key] = s;
+    });
+    const rec = { k: x.k, title: x.title, t: Date.now(), n: x.qs.length, right, score: Math.round((right / x.qs.length) * 100), secs: Math.round((Math.min(Date.now(), x.end) - x.start) / 1000) };
+    store.exams.push(rec);
+    if (store.exams.length > 200) store.exams.splice(0, store.exams.length - 200);
+    save();
+    examResult(rec, wrong, prev);
+  }
+  function examResult(rec, wrong, prev) {
+    let html = '<header class="bar-top"><button class="back" data-unit="' + rec.k + '">‹ 返回</button><h1>考试成绩</h1></header>';
+    html += '<div class="card score"><div class="big">' + rec.score + '<small>分</small></div><div class="sub">答对 ' + rec.right + ' / ' + rec.n + ' · 用时 ' + fmt(rec.secs * 1000) + '</div>' +
+      (prev.n ? '<div class="sub">' + (rec.score > prev.best ? '新纪录！之前最高 ' + prev.best + ' 分' : '历史最高 ' + prev.best + ' 分') + '</div>' : '') + '</div>';
+    if (wrong.length) {
+      html += '<button class="btn primary wide" id="redo">练习这 ' + wrong.length + ' 道错题</button><h2 class="phase">错题（' + wrong.length + '）· 已加入错题本</h2><div class="list">';
+      wrong.forEach(({ q, pick: p }) => {
+        html += '<div class="row"><div class="row-head"><div class="row-en">' + esc(q.prompt) + '</div>' + star(q.it.id) + '</div>' +
+          '<div class="row-pick no">你的答案：' + (p === null ? '未作答' : esc(q.options[p])) + '</div><div class="row-pick ok">正确答案：' + esc(q.answer) + '</div>' +
+          '<div class="row-meta">' + TYPES[q.type].label + ' · ' + q.it.src + '</div></div>';
+      });
+      html += '</div>';
+    }
+    html += '<button class="btn ghost wide" id="again">再考一次</button><button class="btn ghost wide" data-go="home">回到首页</button>';
+    render(html);
+    const r = document.getElementById('redo');
+    if (r) r.onclick = () => startQuiz(shuffle(wrong.map((w) => w.q.key)), '考试错题', () => unitSheet(rec.k));
+    document.getElementById('again').onclick = () => startExam(rec.k, rec.n);
+  }
+  function examLog() {
+    if (!store.exams.length) return home();
+    let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>考试记录</h1></header>';
+    const ks = [...new Set(store.exams.map((e) => e.k))].sort((a, b) => a - b);
+    html += '<h2 class="phase">各次考试</h2><div class="list">';
+    ks.forEach((k) => {
+      const r = store.exams.filter((e) => e.k === k), last = r[r.length - 1];
+      html += '<button class="unit" data-unit="' + k + '"><div class="u-head"><span class="u-title">' + UNITS[k - 1].title + '</span><span class="rec-score">最高 ' + Math.max(...r.map((e) => e.score)) + ' 分</span></div>' +
+        '<div class="u-desc">考了 ' + r.length + ' 次 · 最近一次 ' + last.score + ' 分（' + r.slice(-5).map((e) => e.score).join(' → ') + '）</div></button>';
+    });
+    html += '</div><h2 class="phase">全部记录</h2><div class="list">';
+    store.exams.slice().reverse().forEach((e) => {
+      html += '<div class="row"><div class="u-head"><span class="u-title">' + esc(e.title) + '</span><span class="rec-score">' + e.score + ' 分</span></div><div class="row-meta">' + day(e.t) + ' · 答对 ' + e.right + ' / ' + e.n + ' · 用时 ' + fmt(e.secs * 1000) + '</div></div>';
+    });
     render(html + '</div>');
   }
 
@@ -302,7 +456,7 @@
     const done = Math.min(Q.i, Q.total);
     let html = '<header class="bar-top"><button class="back" id="quit">‹ 结束</button><h1>' + esc(Q.title) + '</h1><span class="prog">' + (Q.i + 1) + '/' + Q.queue.length + '</span></header>';
     html += '<div class="bar thin"><i style="width:' + (done / Q.queue.length) * 100 + '%"></i></div>';
-    html += '<div class="q card"><div class="q-type">' + TYPES[q.type].label + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
+    html += '<div class="q card"><div class="q-type">' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
       (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
     q.options.forEach((o, i) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + '" data-opt="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span>' + esc(o) + '</span></button>'; });
     html += '</div><div id="fb"></div>';
@@ -346,14 +500,25 @@
   // ---------- 事件 ----------
   document.addEventListener('click', (e) => {
     const t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.fav) {
+      const id = t.dataset.fav;
+      if (store.fav[id]) delete store.fav[id]; else store.fav[id] = Date.now();
+      save();
+      document.querySelectorAll('.star').forEach((b) => { if (b.dataset.fav === id) b.textContent = store.fav[id] ? '★' : '☆'; });
+      return;
+    }
     if (t.dataset.say) { e.stopPropagation(); return speak(t.dataset.say); }
     if (t.dataset.opt) return answer(+t.dataset.opt);
+    if (t.dataset.xopt) return examPick(+t.dataset.xopt);
+    if (t.dataset.xgo) { X.i = +t.dataset.xgo; return examQ(); }
     if (t.dataset.unit) return unitSheet(+t.dataset.unit);
     if (t.dataset.browse) return browse(+t.dataset.browse);
     const go = t.dataset.go;
     if (go === 'home') home();
     else if (go === 'wrong') wrongBook();
     else if (go === 'mix') mixSheet();
+    else if (go === 'fav') favBook();
+    else if (go === 'exams') examLog();
     else if (go === 'reset') {
       if (t.dataset.armed) { store.stats = {}; save(); home(); }
       else { t.dataset.armed = '1'; t.textContent = '再点一次，清空全部记录和错题（不能撤销）'; t.classList.add('danger'); }
