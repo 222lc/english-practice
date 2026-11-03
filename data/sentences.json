@@ -1,0 +1,7 @@
+{
+  "note": "AE = Airframe and Engine/MLX；AV = Avionics；AI = Aircraft Interior。三本第1-30句完全相同，存于 shared，三本共用（页码三本一致）。页码按英文所在页记。flag 标记需要人工核对的条目。",
+  "shared": [],
+  "AE": [],
+  "AV": [],
+  "AI": []
+}

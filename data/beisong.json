@@ -1,0 +1,37 @@
+{
+  "note": "背诵N 对应第N次考试。目前已录入背诵1（共30句）。",
+  "sets": {
+    "1": [
+      {"n": 1, "en": "If you see discoloration,replace the part.", "zh": "如果你看到变色，更换部件。"},
+      {"n": 2, "en": "If you find a crack, do the applicable repair procedure.", "zh": "如果你发现了裂纹，做适用的修理程序。"},
+      {"n": 3, "en": "Remove the tag.", "zh": "拆下标签。"},
+      {"n": 4, "en": "Disconnect the cable from the rear side of the instrument.", "zh": "从仪器的后部断开电缆。"},
+      {"n": 5, "en": "These parts can easily bend, break or become incorrectly aligned.", "zh": "这些部件很容易弯曲、断裂或不正确地对齐。"},
+      {"n": 6, "en": "The navigation lights change from dim to bright.", "zh": "航行灯从暗亮变为明亮。"},
+      {"n": 7, "en": "In this configuration, the hydraulic pressure bypasses the valve.", "zh": "在这种构型中，液压旁通这个活门。"},
+      {"n": 8, "en": "Move the lever rearward.", "zh": "向后移动手柄。"},
+      {"n": 9, "en": "If the radio signal is not clear, adjust the frequency.", "zh": "如果无线电信号不清晰，调整频率。"},
+      {"n": 10, "en": "Corrosion can have many causes.", "zh": "腐蚀可能有很多原因。"},
+      {"n": 11, "en": "Servicing include information for servicing the aircraft with proper fuel and oil.", "zh": "勤务包括为飞机提供适当的燃油和滑油的信息。"},
+      {"n": 12, "en": "If either of these devices is installed explain whether it is required equipment.", "zh": "如果安装了其中一个设备，则说明它是否是必需的设备。"},
+      {"n": 13, "en": "This subsystem/section breakdown is reserved for airline use.", "zh": "这个子系统/节预留给航空公司使用。"},
+      {"n": 14, "en": "Cooling system and its controls supply cooled air to the cabin.", "zh": "冷却系统及其控制为客舱提供冷却空气。"},
+      {"n": 15, "en": "In most operations there are key items that are significant to the job.", "zh": "大多数操作都有对该项工作很重要的关键事项。"},
+      {"n": 16, "en": "This Specification was developed with the objective of minimizing the cost.", "zh": "制定本规范的目的是为了降低成本。"},
+      {"n": 17, "en": "Start each section on a right-hand page.", "zh": "每个部分都要从右侧页面开始。"},
+      {"n": 18, "en": "In the alternative, the acronym CAP may be used.", "zh": "做为另外一种选择，可以使用缩写CAP。"},
+      {"n": 19, "en": "2 hours are necessary to do the procedure.", "zh": "做这个程序需要两个小时。"},
+      {"n": 20, "en": "Stop the test after 2 seconds.", "zh": "2秒后终止测试"},
+      {"n": 21, "en": "This procedure is applicable only in digital mode.", "zh": "这个程序仅适用于数字模式。"},
+      {"n": 22, "en": "Explain how to avoid and notice fuel contamination.", "zh": "解释如何避免和注意燃油污染。"},
+      {"n": 23, "en": "Maintenance information needs to be continuously updated.", "zh": "维护信息需要不断更新。"},
+      {"n": 24, "en": "Other information may be displayed on the cover.", "zh": "其他信息可能会显示在封面上。"},
+      {"n": 25, "en": "Access and location instructions are provided here unless obvious.", "zh": "除非很明显，否则接近和位置的说明会在此给出。"},
+      {"n": 26, "en": "Operate the unit for two cycles to remove air from the lines.", "zh": "操作部件两个循环，排除管道中的空气。"},
+      {"n": 27, "en": "Move the tensiometer along the cable.", "zh": "沿着钢索移动张力计。"},
+      {"n": 28, "en": "Use the manual procedure if it is not possible to use the automatic control.", "zh": "如果无法使用自动控制，请使用人工控制程序。"},
+      {"n": 29, "en": "Replace nuts and washers if removed during inspection. Do not reuse.", "zh": "如果在检查过程中拆卸了螺母和垫圈，则应更换。不要重复使用。"},
+      {"n": 30, "en": "The airplane has been maintained in accordance with manufacturer recommendations or equivalent.", "zh": "飞机已按照制造商建议或同等标准进行维护。"}
+    ]
+  }
+}
