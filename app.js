@@ -1,4 +1,4 @@
-/* 航空技术英语考试练习 —— 纯前端，进度存在本机 localStorage */
+/* BL 考试练习 —— 纯前端，进度存在本机 localStorage */
 (function () {
   'use strict';
   const D = window.DATA;
@@ -15,13 +15,18 @@
   // ---------- 题库条目 ----------
   const items = {};           // id -> {id, kind:'word'|'sent', en, zh, src}
   const add = (it) => (items[it.id] = it);
-  D.vocab.forEach((w) => add({ id: 'w:' + w.en, kind: 'word', en: w.en, zh: w.zh, page: w.page, src: '词汇表 第' + w.page + '页' }));
+  // 同一个词在不同页重复出现（如 lower 在第9页和第18页），后出现的加页码区分，各算各的
+  D.vocab.forEach((w) => {
+    let id = 'w:' + w.en;
+    if (items[id]) id += '@' + w.page;
+    add({ id, kind: 'word', en: w.en, zh: w.zh, page: w.page, src: '词汇表 第' + w.page + '页' });
+  });
   D.sentences.shared.forEach((s) => add({ id: 'S:' + s.n, kind: 'sent', en: s.en, zh: s.zh, page: s.page, src: '通用句 ' + s.n }));
   ['AE', 'AV', 'AI'].forEach((b) => (D.sentences[b] || []).forEach((s) => {
     if (s.dupOf) return; // 重复句合并
     add({ id: b + ':' + s.n, kind: 'sent', en: s.en, zh: s.zh, page: s.page, book: b, src: b + ' 第' + s.n + '句' });
   }));
-  Object.keys(D.beisong).forEach((k) => D.beisong[k].forEach((s) => add({ id: 'B' + k + ':' + s.n, kind: 'sent', en: s.en, zh: s.zh, src: '背诵' + k + ' 第' + s.n + '句' })));
+  Object.keys(D.beisong).forEach((k) => D.beisong[k].forEach((s) => add({ id: 'B' + k + ':' + s.n, kind: 'sent', en: s.en, zh: s.para ? s.en2 : s.zh, zhFirst: !!s.zhFirst, para: !!s.para, src: '背诵' + k + ' 第' + s.n + '句' })));
 
   const vocabPages = new Set(D.vocab.map((w) => w.page));
   const allWords = Object.values(items).filter((i) => i.kind === 'word');
@@ -90,11 +95,20 @@
     w_c2e: { label: '单词 中→英', kind: 'word' },
     s_e2c: { label: '句子 英→中', kind: 'sent' },
     s_c2e: { label: '句子 中→英', kind: 'sent' },
+    s_par: { label: '句子 同义改写', kind: 'sent' },
   };
   function unitTypes(u) { return u.zh2enSent ? ['w_e2c', 'w_c2e', 's_e2c', 's_c2e'] : ['w_e2c', 'w_c2e', 's_e2c']; }
+  // 原表中文在左、英文在右的背诵句（zhFirst）考试时给中文选英文，所以只出“句子 中→英”
   function keysFor(content, types) {
     const keys = [];
-    types.forEach((t) => (TYPES[t].kind === 'word' ? content.words : content.sents).forEach((id) => keys.push(t + '|' + id)));
+    // 背诵20 起每份第1–2句两栏都是英文（原句 + 同义改写，para），只出“同义改写”题
+    const special = (id) => items[id] && (items[id].zhFirst || items[id].para);
+    types.forEach((t) => {
+      if (t === 's_par') return;
+      if (TYPES[t].kind === 'word') content.words.forEach((id) => keys.push(t + '|' + id));
+      else content.sents.forEach((id) => { if (!special(id)) keys.push(t + '|' + id); });
+    });
+    if (types.some((t) => TYPES[t].kind === 'sent')) content.sents.forEach((id) => { const it = items[id]; if (it && it.para) keys.push('s_par|' + id); else if (it && it.zhFirst) keys.push('s_c2e|' + id); });
     return keys;
   }
   const stat = (key) => store.stats[key] || { right: 0, wrong: 0, streak: 0 };
@@ -134,7 +148,9 @@
   }
   function distractors(it, field, pool) {
     const ans = it[field];
-    const cands = pool.filter((o) => o.id !== it.id && o[field] !== ans);
+    // 中文相同的词（如 clear / clearance）不当干扰项，免得一题两个对的
+    const other = field === 'zh' ? 'en' : 'zh';
+    const cands = pool.filter((o) => o.id !== it.id && o[field] !== ans && o[other] !== it[other]);
     const sim = it.kind === 'word' ? (o) => wordSim(it.en, o.en) : (o) => sentSim(it.en, o.en);
     const ranked = cands.map((o) => [sim(o), o]).sort((a, b) => b[0] - a[0]).map((x) => x[1]);
     const picked = []; const seen = new Set([ans]);
@@ -150,8 +166,10 @@
     const it = items[id]; if (!it) return null;
     // 句子干扰项来自同一组：背诵N 用同一份背诵，AE/AV/AI 用这三本里的句子
     const grp = (x) => (x.id[0] === 'B' ? x.id.split(':')[0] : 'book');
-    const pool = it.kind === 'word' ? allWords : Object.values(items).filter((i) => i.kind === 'sent' && grp(i) === grp(it));
-    const e2c = t.endsWith('e2c');
+    // 同义改写题：给原句，从所有改写句里选意思相同的那句
+    const para = t === 's_par';
+    const pool = it.kind === 'word' ? allWords : para ? Object.values(items).filter((i) => i.para) : Object.values(items).filter((i) => i.kind === 'sent' && !i.para && grp(i) === grp(it));
+    const e2c = para || t.endsWith('e2c');
     const field = e2c ? 'zh' : 'en';
     const opts = shuffle([it[field], ...distractors(it, field, pool)]);
     return { key, type: t, it, prompt: e2c ? it.en : it.zh, promptEn: e2c, options: opts, answer: it[field] };
@@ -193,7 +211,7 @@
   function home() {
     const wrongN = Object.keys(store.stats).filter(isWrong).length;
     const favN = Object.keys(store.fav).filter((id) => items[id]).length;
-    let html = '<header class="top"><h1>航空技术英语</h1><p class="sub">按考试场次练习 · 进度保存在本机</p></header>';
+    let html = '<header class="top"><h1>BL</h1><p class="sub">按考试场次练习 · 进度保存在本机</p></header>';
     html += '<div class="actions"><button class="btn ghost" data-go="wrong"' + (wrongN ? '' : ' disabled') + '>错题本 <b>' + wrongN + '</b></button><button class="btn ghost" data-go="mix">多单元混合复习</button>' +
       '<button class="btn ghost" data-go="fav"' + (favN ? '' : ' disabled') + '>收藏 <b>' + favN + '</b></button><button class="btn ghost" data-go="exams"' + (store.exams.length ? '' : ' disabled') + '>考试记录 <b>' + store.exams.length + '</b></button></div>';
     let phase = 0;
@@ -270,7 +288,7 @@
   function mixSheet() {
     let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>混合复习</h1></header><form id="mix" class="card">';
     html += '<div class="field"><div class="label">选择单元</div><div class="chips">' + UNITS.slice(0, 24).map((u) => chip('unit', u.k, '第' + u.k + '次', false)).join('') + '</div></div>';
-    html += '<div class="field"><div class="label">题型</div><div class="chips">' + Object.keys(TYPES).map((t) => chip('type', t, TYPES[t].label, t !== 's_c2e')).join('') + '</div></div>';
+    html += '<div class="field"><div class="label">题型</div><div class="chips">' + Object.keys(TYPES).filter((t) => t !== 's_par').map((t) => chip('type', t, TYPES[t].label, t !== 's_c2e')).join('') + '</div></div>';
     html += '<div class="field"><div class="label">题数</div><div class="chips">' + [20, 50, 100].map((n) => radio('count', n, n + ' 题', n === 50)).join('') + '</div></div>';
     html += '<label class="switch"><input type="checkbox" name="weak"><span>薄弱词优先（错得最多的先出）</span></label>';
     html += '<p class="count" id="cnt"></p><button class="btn primary">开始</button></form>';
