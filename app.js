@@ -154,7 +154,7 @@
     const sim = it.kind === 'word' ? (o) => wordSim(it.en, o.en) : (o) => sentSim(it.en, o.en);
     const ranked = cands.map((o) => [sim(o), o]).sort((a, b) => b[0] - a[0]).map((x) => x[1]);
     const picked = []; const seen = new Set([ans]);
-    const take = (o) => { if (o && !seen.has(o[field])) { seen.add(o[field]); picked.push(o[field]); } };
+    const take = (o) => { if (o && !seen.has(o[field])) { seen.add(o[field]); picked.push(o); } };
     shuffle(ranked.slice(0, 6)).forEach((o) => picked.length < 2 && take(o));
     shuffle(cands).forEach((o) => picked.length < 3 && take(o));
     return picked;
@@ -171,8 +171,9 @@
     const pool = it.kind === 'word' ? allWords : para ? Object.values(items).filter((i) => i.para) : Object.values(items).filter((i) => i.kind === 'sent' && !i.para && grp(i) === grp(it));
     const e2c = para || t.endsWith('e2c');
     const field = e2c ? 'zh' : 'en';
-    const opts = shuffle([it[field], ...distractors(it, field, pool)]);
-    return { key, type: t, it, prompt: e2c ? it.en : it.zh, promptEn: e2c, options: opts, answer: it[field] };
+    const all = shuffle([it, ...distractors(it, field, pool)]);
+    // gloss：每个选项对应的另一种语言（选项是中文就是英文，反之亦然），答题后显示
+    return { key, type: t, it, prompt: e2c ? it.en : it.zh, promptEn: e2c, options: all.map((o) => o[field]), gloss: all.map((o) => o[e2c ? 'en' : 'zh']), answer: it[field] };
   }
 
   // ---------- 出题 ----------
@@ -481,7 +482,7 @@
     html += '<div class="bar thin"><i style="width:' + (done / Q.queue.length) * 100 + '%"></i></div>';
     html += '<div class="q card"><div class="q-type">' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
       (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
-    q.options.forEach((o, i) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + '" data-opt="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span>' + esc(o) + '</span></button>'; });
+    q.options.forEach((o, i) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + '" data-opt="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span class="opt-t"><span>' + esc(o) + '</span></span></button>'; });
     html += '</div><div id="fb"></div>';
     render(html);
     document.getElementById('quit').onclick = () => (Q.i > 0 ? result() : Q.back());
@@ -495,6 +496,8 @@
     document.querySelectorAll('.opt').forEach((b, j) => {
       b.disabled = true;
       if (q.options[j] === q.answer) b.classList.add('right'); else if (j === i) b.classList.add('wrong');
+      // 答完后每个选项下面都显示它对应的意思，错的选项也能顺便认识
+      if (q.gloss && q.gloss[j]) b.querySelector('.opt-t').insertAdjacentHTML('beforeend', '<span class="gloss">' + esc(q.gloss[j]) + '</span>');
     });
     const fb = document.getElementById('fb');
     fb.innerHTML = '<div class="fb ' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓ 答对了' : '✗ 答错了，这题稍后会再出一次') + '</div>' +
