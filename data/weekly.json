@@ -113,12 +113,12 @@
               "n": 10,
               "q": "\"CAUTION: MAKE SURE THE POLARITY IS CORRECT TO PREVENT DAMAGE TO EQUIPMENT.\" means ______.",
               "options": [
-                "Warning",
-                "Note",
-                "Step"
+                "警戒：确保极性正确防止设备损坏。",
+                "警告：确保极性正确防止人员受伤。",
+                "警戒：极性错误不会损坏设备。"
               ],
               "answer": 0,
-              "explain": "这句 CAUTION 是一条警示（warning）：确保极性正确，防止设备损坏。polarity 极性"
+              "explain": "CAUTION = 警戒，针对设备损坏；WARNING = 警告，针对人员受伤。polarity 极性"
             },
             {
               "n": 11,
