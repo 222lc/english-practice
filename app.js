@@ -28,8 +28,32 @@
   }));
   Object.keys(D.beisong).forEach((k) => D.beisong[k].forEach((s) => add({ id: 'B' + k + ':' + s.n, kind: 'sent', en: s.en, zh: s.para ? s.en2 : s.zh, zhFirst: !!s.zhFirst, para: !!s.para, src: '背诵' + k + ' 第' + s.n + '句' })));
 
+  // 周考：每次周考 5 张卷子。items 是单词/句子（自动出题），questions 是卷子上的原题
+  const WEEKS = (D.weekly || []).map((w) => {
+    const k = 'w' + w.id;
+    const papers = w.papers.map((p) => {
+      const pre = 'W' + w.id + '.' + p.n + ':';
+      const src = w.title + ' ' + (p.title || '第' + p.n + '天');
+      const words = [], sents = [], mcqs = [];
+      (p.items || []).forEach((s, i) => {
+        const n = s.n || i + 1;
+        const kind = s.kind || (s.en.trim().split(/\s+/).length >= 4 ? 'sent' : 'word');
+        add({ id: pre + n, kind, en: s.en, zh: s.zh, wk: w.id, src: src + ' 第' + n + '条' });
+        (kind === 'word' ? words : sents).push(pre + n);
+      });
+      (p.questions || []).forEach((q, i) => {
+        const n = q.n || i + 1, ans = q.options[q.answer];
+        add({ id: pre + 'q' + n, kind: 'mcq', en: q.q, zh: '答案：' + ans + (q.explain ? '（' + q.explain + '）' : ''), options: q.options, answer: ans, wk: w.id, src: src + ' 第' + n + '题' });
+        mcqs.push(pre + 'q' + n);
+      });
+      return { n: p.n, title: p.title || '第' + p.n + '天', words, sents, mcqs };
+    });
+    return { k, weekly: true, id: w.id, title: w.title, papers };
+  });
+
   const vocabPages = new Set(D.vocab.map((w) => w.page));
-  const allWords = Object.values(items).filter((i) => i.kind === 'word');
+  const allWords = Object.values(items).filter((i) => i.kind === 'word' && !i.wk);
+  const unitOf = (k) => (typeof k === 'number' ? UNITS[k - 1] : WEEKS.find((w) => w.k === k));
 
   function bookSentences(book, pages) {
     const out = D.sentences.shared.filter((s) => pages.includes(s.page)).map((s) => 'S:' + s.n);
@@ -66,9 +90,13 @@
   }
   function pageLabel(p) { return p.length === 6 ? ' 全部' : p.length === 1 ? ' 第' + p[0] + '页' : ' ' + p[0] + '–' + p[p.length - 1] + ' 页'; }
 
-  // 单元内容；opts: {mixVocab, books}
+  // 单元内容；opts: {mixVocab, books}；周考 opts.papers 是选中的卷子（不传就是全部）
   function unitContent(u, opts) {
     opts = opts || {};
+    if (u.weekly) {
+      const ps = u.papers.filter((p) => !opts.papers || opts.papers.includes(p.n));
+      return { words: ps.flatMap((p) => p.words), sents: ps.flatMap((p) => p.sents), mcqs: ps.flatMap((p) => p.mcqs) };
+    }
     let words = [], sents = [];
     if (u.vocabPages) words = allWords.filter((w) => u.vocabPages.includes(w.page)).map((w) => w.id);
     if (u.allVocab || (u.phase >= 2 && opts.mixVocab)) words = allWords.map((w) => w.id);
@@ -82,8 +110,10 @@
     else if (D.beisong[u.k]) D.beisong[u.k].forEach((s) => sents.push('B' + u.k + ':' + s.n));
     return { words, sents };
   }
+  const paperEmpty = (p) => !p.words.length && !p.sents.length && !p.mcqs.length;
   function unitMissing(u) {
     const m = [];
+    if (u.weekly) { u.papers.forEach((p) => paperEmpty(p) && m.push(p.title + '的卷子')); return m; }
     if (u.vocabPages && !u.vocabPages.every((p) => vocabPages.has(p))) m.push('词汇表第' + u.vocabPages.join('、') + '页');
     if (u.phase < 4 && !D.beisong[u.k]) m.push('背诵' + u.k);
     return m;
@@ -96,8 +126,18 @@
     s_e2c: { label: '句子 英→中', kind: 'sent' },
     s_c2e: { label: '句子 中→英', kind: 'sent' },
     s_par: { label: '句子 同义改写', kind: 'sent' },
+    q_mcq: { label: '卷子原题', kind: 'mcq' },
   };
-  function unitTypes(u) { return u.zh2enSent ? ['w_e2c', 'w_c2e', 's_e2c', 's_c2e'] : ['w_e2c', 'w_c2e', 's_e2c']; }
+  function unitTypes(u) {
+    if (u.weekly) {
+      const c = unitContent(u), t = [];
+      if (c.words.length) t.push('w_e2c', 'w_c2e');
+      if (c.sents.length) t.push('s_e2c', 's_c2e');
+      if (c.mcqs.length) t.push('q_mcq');
+      return t;
+    }
+    return u.zh2enSent ? ['w_e2c', 'w_c2e', 's_e2c', 's_c2e'] : ['w_e2c', 'w_c2e', 's_e2c'];
+  }
   // 原表中文在左、英文在右的背诵句（zhFirst）考试时给中文选英文，所以只出“句子 中→英”
   function keysFor(content, types) {
     const keys = [];
@@ -105,6 +145,7 @@
     const special = (id) => items[id] && (items[id].zhFirst || items[id].para);
     types.forEach((t) => {
       if (t === 's_par') return;
+      if (t === 'q_mcq') return (content.mcqs || []).forEach((id) => keys.push(t + '|' + id));
       if (TYPES[t].kind === 'word') content.words.forEach((id) => keys.push(t + '|' + id));
       else content.sents.forEach((id) => { if (!special(id)) keys.push(t + '|' + id); });
     });
@@ -164,11 +205,16 @@
   function makeQuestion(key) {
     const [t, id] = [key.slice(0, 5), key.slice(6)];
     const it = items[id]; if (!it) return null;
-    // 句子干扰项来自同一组：背诵N 用同一份背诵，AE/AV/AI 用这三本里的句子
-    const grp = (x) => (x.id[0] === 'B' ? x.id.split(':')[0] : 'book');
+    // 卷子原题：选项照卷子，只打乱顺序
+    if (t === 'q_mcq') { const o = shuffle(it.options); return { key, type: t, it, prompt: it.en, promptEn: false, options: o, gloss: null, answer: it.answer }; }
+    // 句子干扰项来自同一组：背诵N 用同一份背诵，AE/AV/AI 用这三本里的句子，周考用同一次周考
+    const grp = (x) => (x.wk ? 'W' + x.wk : x.id[0] === 'B' ? x.id.split(':')[0] : 'book');
     // 同义改写题：给原句，从所有改写句里选意思相同的那句
     const para = t === 's_par';
-    const pool = it.kind === 'word' ? allWords : para ? Object.values(items).filter((i) => i.para) : Object.values(items).filter((i) => i.kind === 'sent' && !i.para && grp(i) === grp(it));
+    let pool = it.kind === 'word' ? (it.wk ? Object.values(items).filter((i) => i.kind === 'word' && i.wk === it.wk) : allWords)
+      : para ? Object.values(items).filter((i) => i.para) : Object.values(items).filter((i) => i.kind === 'sent' && !i.para && grp(i) === grp(it));
+    // 周考内容少的时候，干扰项从月考题库里补
+    if (it.wk && pool.length < 8) pool = pool.concat(it.kind === 'word' ? allWords : Object.values(items).filter((i) => i.kind === 'sent' && !i.para && !i.wk));
     const e2c = para || t.endsWith('e2c');
     const field = e2c ? 'zh' : 'en';
     const all = shuffle([it, ...distractors(it, field, pool)]);
@@ -215,17 +261,31 @@
     let html = '<header class="top"><h1>BL</h1><p class="sub">按考试场次练习 · 进度保存在本机</p></header>';
     html += '<div class="actions"><button class="btn ghost" data-go="wrong"' + (wrongN ? '' : ' disabled') + '>错题本 <b>' + wrongN + '</b></button><button class="btn ghost" data-go="mix">多单元混合复习</button>' +
       '<button class="btn ghost" data-go="fav"' + (favN ? '' : ' disabled') + '>收藏 <b>' + favN + '</b></button><button class="btn ghost" data-go="exams"' + (store.exams.length ? '' : ' disabled') + '>考试记录 <b>' + store.exams.length + '</b></button></div>';
-    let phase = 0;
-    UNITS.forEach((u) => {
-      if (u.phase !== phase) { phase = u.phase; html += '<h2 class="phase">' + PHASES[phase] + '</h2>'; }
+    const tab = store.prefs.tab === 'week' ? 'week' : 'month';
+    html += '<div class="tabs" role="tablist">' + [['month', '月考'], ['week', '周考']].map(([v, l]) => '<button role="tab" aria-selected="' + (tab === v) + '" class="tab' + (tab === v ? ' on' : '') + '" data-tab="' + v + '">' + l + '</button>').join('') + '</div>';
+    const card = (u, desc) => {
       const pr = unitProgress(u); const miss = unitMissing(u); const ex = examStats(u.k);
       const pct = pr.total ? Math.round((pr.done / pr.total) * 100) : 0;
-      html += '<button class="unit" data-unit="' + u.k + '"><div class="u-head"><span class="u-title">' + u.title + '</span><span class="u-pct">' + (pr.total ? pct + '%' : '') + '</span></div>' +
-        '<div class="u-desc">' + u.desc + '</div>' +
+      return '<button class="unit" data-unit="' + u.k + '"><div class="u-head"><span class="u-title">' + esc(u.title) + '</span><span class="u-pct">' + (pr.total ? pct + '%' : '') + '</span></div>' +
+        '<div class="u-desc">' + desc + '</div>' +
         (ex.n ? '<div class="u-exam">模拟考 最高 ' + ex.best + ' 分 · 共 ' + ex.n + ' 次</div>' : '') +
         (pr.total ? '<div class="bar"><i style="width:' + pct + '%"></i></div>' : '') +
         (miss.length ? '<div class="u-miss">尚未录入：' + miss.join('、') + '</div>' : '') + '</button>';
-    });
+    };
+    if (tab === 'week') {
+      html += '<p class="sub pad tab-sub">每天一张卷子，考试从本周卷子里出 ' + WEEK_EXAM_N + ' 题</p>';
+      WEEKS.slice().reverse().forEach((w) => {
+        const have = w.papers.filter((p) => !paperEmpty(p)).length;
+        html += card(w, w.papers.length + ' 张卷子 · 已录入 ' + have + ' 张');
+      });
+      if (!WEEKS.length) html += '<p class="note">还没有周考题库。</p>';
+    } else {
+      let phase = 0;
+      UNITS.forEach((u) => {
+        if (u.phase !== phase) { phase = u.phase; html += '<h2 class="phase">' + PHASES[phase] + '</h2>'; }
+        html += card(u, u.desc);
+      });
+    }
     html += '<footer class="foot">题库版本 ' + D.version + ' · <button class="link" data-go="reset">清空练习记录</button></footer>';
     render(html);
   }
@@ -283,6 +343,49 @@
       startQuiz(session, u.title, () => unitSheet(k));
     });
   }
+  const openUnit = (k) => (typeof k === 'number' ? unitSheet(k) : weekSheet(k));
+
+  function weekSheet(k) {
+    const u = unitOf(k); if (!u) return home();
+    const types = unitTypes(u);
+    const ready = u.papers.filter((p) => !paperEmpty(p));
+    const pref = Object.assign({ types, papers: ready.map((p) => p.n), count: 20, weak: false }, store.prefs[k] || {});
+    pref.types = pref.types.filter((t) => types.includes(t)); if (!pref.types.length) pref.types = types;
+    const miss = unitMissing(u);
+    let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>' + esc(u.title) + '</h1></header>';
+    html += '<p class="sub pad">' + u.papers.length + ' 张卷子，考试从里面出 ' + WEEK_EXAM_N + ' 题</p>';
+    if (miss.length) html += '<p class="note pad">尚未录入：' + miss.join('、') + '。录入后会自动出现在练习里。</p>';
+    if (!ready.length) { render(html); return; }
+    html += '<form id="opt" class="card">';
+    html += '<div class="field"><div class="label">卷子</div><div class="chips">' + ready.map((p) => {
+      const pr = keysFor(unitContent(u, { papers: [p.n] }), types), done = pr.filter(mastered).length;
+      return chip('paper', p.n, esc(p.title) + (pr.length ? ' · ' + Math.round((done / pr.length) * 100) + '%' : ''), pref.papers.includes(p.n));
+    }).join('') + '</div></div>';
+    html += '<div class="field"><div class="label">题型</div><div class="chips">' + types.map((t) => chip('type', t, TYPES[t].label, pref.types.includes(t))).join('') + '</div></div>';
+    html += '<div class="field"><div class="label">题数</div><div class="chips">' + [10, 20, 50, 0].map((n) => radio('count', n, n ? n + ' 题' : '全部', pref.count === n)).join('') + '</div></div>';
+    html += '<label class="switch"><input type="checkbox" name="weak"' + (pref.weak ? ' checked' : '') + '><span>薄弱词优先（错得最多的先出）</span></label>';
+    html += '<p class="count" id="cnt"></p><button type="submit" class="btn primary">开始练习</button></form>';
+    html += '<button class="btn ghost wide" data-browse="' + k + '">浏览全部卷子内容</button>';
+    const ex = examStats(k);
+    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">从' + (ready.length < u.papers.length ? '已录入的 ' + ready.length + ' 张' : '全部 ' + u.papers.length + ' 张') + '卷子里抽题，限时（每题 ' + SEC_PER_Q + ' 秒），中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
+      '<div class="field"><div class="chips">' + [20, WEEK_EXAM_N, 50].map((n) => radio('exn', n, n + ' 题', n === WEEK_EXAM_N)).join('') + '</div></div>' +
+      '<label class="switch"><input type="checkbox" id="exweak"><span>薄弱词优先（多抽常错的题）</span></label>' +
+      '<button class="btn primary" id="exam">开始模拟考试</button></div>';
+    render(html);
+    document.getElementById('exam').onclick = () => startExam(k, +document.querySelector('input[name="exn"]:checked').value, document.getElementById('exweak').checked);
+    const form = document.getElementById('opt');
+    const read = () => { const fd = new FormData(form); return { papers: fd.getAll('paper').map(Number), types: fd.getAll('type'), count: +fd.get('count'), weak: !!fd.get('weak') }; };
+    const upd = () => { const o = read(); document.getElementById('cnt').textContent = '本次可练 ' + keysFor(unitContent(u, o), o.types).length + ' 道题'; };
+    form.addEventListener('change', upd); upd();
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); const o = read();
+      store.prefs[k] = o; save();
+      const keys = keysFor(unitContent(u, o), o.types);
+      if (!keys.length) { document.getElementById('cnt').innerHTML = '<span class="warn">没有可练的题，请至少选一张卷子和一种题型</span>'; return; }
+      startQuiz(buildSession(keys, o.count, o.weak), u.title, () => weekSheet(k));
+    });
+  }
+
   const chip = (name, v, label, on) => '<label class="chip"><input type="checkbox" name="' + name + '" value="' + v + '"' + (on ? ' checked' : '') + '><span>' + label + '</span></label>';
   const radio = (name, v, label, on) => '<label class="chip"><input type="radio" name="' + name + '" value="' + v + '"' + (on ? ' checked' : '') + '><span>' + label + '</span></label>';
 
@@ -318,11 +421,13 @@
   }
 
   function browse(k) {
-    const u = UNITS[k - 1]; const c = unitContent(u, { books: u.books, mixVocab: false });
-    let html = '<header class="bar-top"><button class="back" data-unit="' + k + '">‹ 返回</button><h1>' + u.title + ' 内容</h1></header><div class="list">';
-    const sec = (title, ids) => { if (!ids.length) return; html += '<h2 class="phase">' + title + '（' + ids.length + '）</h2>'; ids.forEach((id) => { const it = items[id]; html += '<div class="row"><div class="row-head"><div class="row-en">' + (canSpeak ? '<button class="say" data-say="' + esc(it.en) + '">🔊</button>' : '') + esc(it.en) + '</div>' + star(id) + '</div><div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + it.src + '</div></div>'; }); };
-    sec('单词', c.words); sec('句子', c.sents);
-    if (!c.words.length && !c.sents.length) html += '<p class="note pad">这个单元的资料还没录入。</p>';
+    const u = unitOf(k); if (!u) return home();
+    const c = unitContent(u, { books: u.books, mixVocab: false });
+    let html = '<header class="bar-top"><button class="back" data-unit="' + k + '">‹ 返回</button><h1>' + esc(u.title) + ' 内容</h1></header><div class="list">';
+    const sec = (title, ids) => { if (!ids.length) return; html += '<h2 class="phase">' + title + '（' + ids.length + '）</h2>'; ids.forEach((id) => { const it = items[id]; const sp = canSpeak && it.kind !== 'mcq'; html += '<div class="row"><div class="row-head"><div class="row-en">' + (sp ? '<button class="say" data-say="' + esc(it.en) + '">🔊</button>' : '') + esc(it.en) + '</div>' + star(id) + '</div>' + (it.kind === 'mcq' ? '<div class="row-meta">' + it.options.map((o, j) => 'ABCD'[j] + '. ' + esc(o)).join('　') + '</div>' : '') + '<div class="row-zh">' + esc(it.zh) + '</div><div class="row-meta">' + it.src + '</div></div>'; }); };
+    if (u.weekly) u.papers.forEach((p) => { sec(esc(p.title) + ' · 单词', p.words); sec(esc(p.title) + ' · 句子', p.sents); sec(esc(p.title) + ' · 原题', p.mcqs); });
+    else { sec('单词', c.words); sec('句子', c.sents); }
+    if (!c.words.length && !c.sents.length && !(c.mcqs || []).length) html += '<p class="note pad">这个单元的资料还没录入。</p>';
     render(html + '</div>');
   }
 
@@ -337,13 +442,14 @@
     });
     render(html + '</div>');
     document.getElementById('go').onclick = () => {
-      const keys = ids.filter((id) => store.fav[id]).flatMap((id) => (items[id].kind === 'word' ? ['w_e2c|' + id, 'w_c2e|' + id] : ['s_e2c|' + id]));
+      const keys = ids.filter((id) => store.fav[id]).flatMap((id) => (items[id].kind === 'word' ? ['w_e2c|' + id, 'w_c2e|' + id] : items[id].kind === 'mcq' ? ['q_mcq|' + id] : ['s_e2c|' + id]));
       if (keys.length) startQuiz(buildSession(keys, 0), '收藏', favBook);
     };
   }
 
   // ---------- 模拟考试 ----------
   const SEC_PER_Q = 30;
+  const WEEK_EXAM_N = 30; // 周考：从本周卷子里出 30 题
   function examStats(k) {
     const r = store.exams.filter((e) => e.k === k);
     return { n: r.length, best: r.length ? Math.max(...r.map((e) => e.score)) : 0 };
@@ -368,7 +474,7 @@
 
   let X = null;
   function startExam(k, n, weak) {
-    const u = UNITS[k - 1];
+    const u = unitOf(k); if (!u) return false;
     const qs = examKeys(u, n, weak).map(makeQuestion).filter(Boolean);
     if (!qs.length) return false;
     const now = Date.now();
@@ -387,9 +493,9 @@
     const q = X.qs[X.i], n = X.qs.length, done = X.picks.filter((p) => p !== null).length, left = X.end - Date.now();
     let html = '<header class="bar-top"><button class="back" id="xquit">‹ 退出</button><h1>' + esc(X.title) + '</h1><span class="prog timer' + (left < 60000 ? ' warn' : '') + '" id="timer">' + fmt(left) + '</span></header>';
     html += '<div class="bar thin"><i style="width:' + (done / n) * 100 + '%"></i></div>';
-    html += '<div class="q card"><div class="q-type">第 ' + (X.i + 1) + ' / ' + n + ' 题 · ' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
+    html += '<div class="q card"><div class="q-type">第 ' + (X.i + 1) + ' / ' + n + ' 题 · ' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind !== 'word' ? 'long' : '') + '">' + esc(q.prompt) +
       (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
-    q.options.forEach((o, j) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + (X.picks[X.i] === j ? ' sel' : '') + '" data-xopt="' + j + '"><span class="k">' + 'ABCD'[j] + '</span><span>' + esc(o) + '</span></button>'; });
+    q.options.forEach((o, j) => { html += '<button class="opt ' + (q.it.kind !== 'word' ? 'long' : '') + (X.picks[X.i] === j ? ' sel' : '') + '" data-xopt="' + j + '"><span class="k">' + 'ABCD'[j] + '</span><span>' + esc(o) + '</span></button>'; });
     html += '</div><div class="xnav"><button class="btn" data-xgo="' + (X.i - 1) + '"' + (X.i ? '' : ' disabled') + '>上一题</button>' +
       (X.i < n - 1 ? '<button class="btn" data-xgo="' + (X.i + 1) + '">下一题</button>' : '<button class="btn primary xsubmit">交卷</button>') + '</div>';
     html += '<div class="label pad">答题卡（已答 ' + done + ' / ' + n + '）</div><div class="sheet">' +
@@ -399,7 +505,7 @@
     document.getElementById('xquit').onclick = (e) => {
       const b = e.currentTarget;
       if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = '再点一次退出（不计分）'; b.classList.add('warn'); return; }
-      clearInterval(X.timer); const k = X.k; X = null; unitSheet(k);
+      clearInterval(X.timer); const k = X.k; X = null; openUnit(k);
     };
     document.querySelectorAll('.xsubmit').forEach((b) => (b.onclick = () => {
       const miss = X.picks.filter((p) => p === null).length;
@@ -447,17 +553,18 @@
     html += '<button class="btn ghost wide" id="again">再考一次</button><button class="btn ghost wide" data-go="home">回到首页</button>';
     render(html);
     const r = document.getElementById('redo');
-    if (r) r.onclick = () => startQuiz(shuffle(wrong.map((w) => w.q.key)), '考试错题', () => unitSheet(rec.k));
+    if (r) r.onclick = () => startQuiz(shuffle(wrong.map((w) => w.q.key)), '考试错题', () => openUnit(rec.k));
     document.getElementById('again').onclick = () => startExam(rec.k, rec.n, rec.weak);
   }
   function examLog() {
     if (!store.exams.length) return home();
     let html = '<header class="bar-top"><button class="back" data-go="home">‹ 返回</button><h1>考试记录</h1></header>';
-    const ks = [...new Set(store.exams.map((e) => e.k))].sort((a, b) => a - b);
+    // 周考排前面（新的在上），再是月考按场次
+    const ks = [...new Set(store.exams.map((e) => e.k))].filter(unitOf).sort((a, b) => (typeof a === typeof b ? (typeof a === 'number' ? a - b : unitOf(b).id - unitOf(a).id) : typeof a === 'number' ? 1 : -1));
     html += '<h2 class="phase">各次考试</h2><div class="list">';
     ks.forEach((k) => {
       const r = store.exams.filter((e) => e.k === k), last = r[r.length - 1];
-      html += '<button class="unit" data-unit="' + k + '"><div class="u-head"><span class="u-title">' + UNITS[k - 1].title + '</span><span class="rec-score">最高 ' + Math.max(...r.map((e) => e.score)) + ' 分</span></div>' +
+      html += '<button class="unit" data-unit="' + k + '"><div class="u-head"><span class="u-title">' + esc(unitOf(k).title) + '</span><span class="rec-score">最高 ' + Math.max(...r.map((e) => e.score)) + ' 分</span></div>' +
         '<div class="u-desc">考了 ' + r.length + ' 次 · 最近一次 ' + last.score + ' 分（' + r.slice(-5).map((e) => e.score).join(' → ') + '）</div></button>';
     });
     html += '</div><h2 class="phase">全部记录</h2><div class="list">';
@@ -480,9 +587,9 @@
     const done = Math.min(Q.i, Q.total);
     let html = '<header class="bar-top"><button class="back" id="quit">‹ 结束</button><h1>' + esc(Q.title) + '</h1><span class="prog">' + (Q.i + 1) + '/' + Q.queue.length + '</span></header>';
     html += '<div class="bar thin"><i style="width:' + (done / Q.queue.length) * 100 + '%"></i></div>';
-    html += '<div class="q card"><div class="q-type">' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind === 'sent' ? 'long' : '') + '">' + esc(q.prompt) +
+    html += '<div class="q card"><div class="q-type">' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind !== 'word' ? 'long' : '') + '">' + esc(q.prompt) +
       (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
-    q.options.forEach((o, i) => { html += '<button class="opt ' + (q.it.kind === 'sent' ? 'long' : '') + '" data-opt="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span class="opt-t"><span>' + esc(o) + '</span></span></button>'; });
+    q.options.forEach((o, i) => { html += '<button class="opt ' + (q.it.kind !== 'word' ? 'long' : '') + '" data-opt="' + i + '"><span class="k">' + 'ABCD'[i] + '</span><span class="opt-t"><span>' + esc(o) + '</span></span></button>'; });
     html += '</div><div id="fb"></div>';
     render(html);
     document.getElementById('quit').onclick = () => (Q.i > 0 ? result() : Q.back());
@@ -501,7 +608,7 @@
     });
     const fb = document.getElementById('fb');
     fb.innerHTML = '<div class="fb ' + (ok ? 'ok' : 'no') + '">' + (ok ? '✓ 答对了' : '✗ 答错了，这题稍后会再出一次') + '</div>' +
-      '<div class="card ans"><div class="row-en">' + (canSpeak ? '<button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + esc(q.it.en) + '</div><div class="row-zh">' + esc(q.it.zh) + '</div><div class="row-meta">' + q.it.src + '</div></div>' +
+      '<div class="card ans"><div class="row-en">' + (canSpeak && q.it.kind !== 'mcq' ?'<button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + esc(q.it.en) + '</div><div class="row-zh">' + esc(q.it.zh) + '</div><div class="row-meta">' + q.it.src + '</div></div>' +
       '<button class="btn primary wide" id="next">下一题</button>';
     document.getElementById('next').onclick = () => { Q.i++; nextQ(); };
     document.getElementById('next').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -537,8 +644,11 @@
     if (t.dataset.opt) return answer(+t.dataset.opt);
     if (t.dataset.xopt) return examPick(+t.dataset.xopt);
     if (t.dataset.xgo) { X.i = +t.dataset.xgo; return examQ(); }
-    if (t.dataset.unit) return unitSheet(+t.dataset.unit);
-    if (t.dataset.browse) return browse(+t.dataset.browse);
+    // 月考单元的 key 是数字（1–25），周考是 'w1' 这样的字符串
+    const keyOf = (v) => (/^\d+$/.test(v) ? +v : v);
+    if (t.dataset.unit) return openUnit(keyOf(t.dataset.unit));
+    if (t.dataset.browse) return browse(keyOf(t.dataset.browse));
+    if (t.dataset.tab) { store.prefs.tab = t.dataset.tab; save(); return home(); }
     const go = t.dataset.go;
     if (go === 'home') home();
     else if (go === 'wrong') wrongBook();

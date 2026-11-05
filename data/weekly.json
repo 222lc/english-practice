@@ -1,0 +1,16 @@
+{
+  "note": "周考题库。每次周考一条，papers 是每天发的卷子（第1–5天）。卷子里的内容放两种地方：items 放单词/句子（en + zh，网站自动出 英→中、中→英 选择题；kind 可写 word 或 sent，不写时按单词数自动判断）；questions 放卷子上的原题（q 题干、options 选项、answer 正确选项的序号，从 0 开始；explain 可写解析）。考试默认从本周全部卷子里抽 30 题。",
+  "weeks": [
+    {
+      "id": 1,
+      "title": "第1次周考",
+      "papers": [
+        { "n": 1, "title": "第1天", "items": [], "questions": [] },
+        { "n": 2, "title": "第2天", "items": [], "questions": [] },
+        { "n": 3, "title": "第3天", "items": [], "questions": [] },
+        { "n": 4, "title": "第4天", "items": [], "questions": [] },
+        { "n": 5, "title": "第5天", "items": [], "questions": [] }
+      ]
+    }
+  ]
+}

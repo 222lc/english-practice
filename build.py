@@ -9,6 +9,7 @@ bundle = {
     "vocab": json.loads((d / "vocab.json").read_text(encoding="utf-8"))["words"],
     "sentences": json.loads((d / "sentences.json").read_text(encoding="utf-8")),
     "beisong": json.loads((d / "beisong.json").read_text(encoding="utf-8"))["sets"],
+    "weekly": json.loads((d / "weekly.json").read_text(encoding="utf-8"))["weeks"] if (d / "weekly.json").exists() else [],
     "version": time.strftime("%Y%m%d%H%M"),
 }
 for k in ("note",):
