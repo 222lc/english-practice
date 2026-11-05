@@ -196,17 +196,19 @@
     const ranked = cands.map((o) => [sim(o), o]).sort((a, b) => b[0] - a[0]).map((x) => x[1]);
     const picked = []; const seen = new Set([ans]);
     const take = (o) => { if (o && !seen.has(o[field])) { seen.add(o[field]); picked.push(o); } };
-    shuffle(ranked.slice(0, 6)).forEach((o) => picked.length < 2 && take(o));
-    shuffle(cands).forEach((o) => picked.length < 3 && take(o));
+    // 考试是三选一：两个干扰项都从最相近的几个里挑，不够再随机补
+    shuffle(ranked.slice(0, 5)).forEach((o) => picked.length < N_OPT - 1 && take(o));
+    shuffle(cands).forEach((o) => picked.length < N_OPT - 1 && take(o));
     return picked;
   }
+  const N_OPT = 3; // 每题选项数：月考、周考考试都是三选一
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
   function makeQuestion(key) {
     const [t, id] = [key.slice(0, 5), key.slice(6)];
     const it = items[id]; if (!it) return null;
     // 卷子原题：选项照卷子，只打乱顺序
-    if (t === 'q_mcq') { const o = shuffle(it.options); return { key, type: t, it, prompt: it.en, promptEn: false, options: o, gloss: null, answer: it.answer }; }
+    if (t === 'q_mcq') { const o = shuffle([it.answer, ...shuffle(it.options.filter((x) => x !== it.answer)).slice(0, N_OPT - 1)]); return { key, type: t, it, prompt: it.en, promptEn: false, options: o, gloss: null, answer: it.answer }; }
     // 句子干扰项来自同一组：背诵N 用同一份背诵，AE/AV/AI 用这三本里的句子，周考用同一次周考
     const grp = (x) => (x.wk ? 'W' + x.wk : x.id[0] === 'B' ? x.id.split(':')[0] : 'book');
     // 同义改写题：给原句，从所有改写句里选意思相同的那句

@@ -16,8 +16,7 @@
               "options": [
                 "The hydraulic pump",
                 "The hydraulic fluid",
-                "The hydraulic reservoir",
-                "The electric pump"
+                "The hydraulic reservoir"
               ],
               "answer": 0,
               "explain": "液压泵需要立即修理。need doing = 需要被……"
@@ -28,8 +27,7 @@
               "options": [
                 "object",
                 "subject",
-                "verb",
-                "adverbial"
+                "verb"
               ],
               "answer": 0,
               "explain": "The team 是主语（subject），prepares 是谓语动词（verb），work 是宾语（object）"
@@ -40,8 +38,7 @@
               "options": [
                 "With lint-free cloth that is moist with solvent",
                 "With dry lint-free cloth",
-                "With cloth that is moist with water",
-                "With solvent only, without cloth"
+                "With cloth that is moist with water"
               ],
               "answer": 0,
               "explain": "lint-free cloth 不起毛的布；moist with solvent 用溶剂浸湿的"
@@ -52,7 +49,6 @@
               "options": [
                 "“DO NOT TOUCH flaps” are attached to spoiler lever.",
                 "“DO NOT TOUCH flaps” attach to spoiler lever.",
-                "Spoiler lever is attached “DO NOT TOUCH flaps”.",
                 "“DO NOT TOUCH flaps” are attaching to spoiler lever."
               ],
               "answer": 0,
@@ -64,8 +60,7 @@
               "options": [
                 "Passive voice",
                 "Active voice",
-                "Negative form",
-                "Imperative sentence"
+                "Negative form"
               ],
               "answer": 0,
               "explain": "关注动作的对象（而不是谁做的）时用被动语态"
@@ -76,8 +71,7 @@
               "options": [
                 "The electrical connectors are disconnected.",
                 "The electrical connectors disconnect.",
-                "The electrical connectors are disconnecting.",
-                "Disconnected the electrical connectors."
+                "The electrical connectors are disconnecting."
               ],
               "answer": 0,
               "explain": "被动语态 = be + 过去分词；electrical connectors 电连接器"
@@ -88,8 +82,7 @@
               "options": [
                 "Warning",
                 "Caution",
-                "Note",
-                "Reference"
+                "Note"
               ],
               "answer": 0,
               "explain": "Warning（警告）防止人员受伤；Caution（警戒）防止设备损坏；Note 是补充说明"
@@ -100,7 +93,6 @@
               "options": [
                 "you should CUT OFF THE SHARP POINT OF STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM.",
                 "you should NOT TOUCH ANY STUD FASTENERS.",
-                "you should INSTALL SHARP STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM.",
                 "SHARP FASTENERS CAN CAUSE DAMAGE TO THE EQUIPMENT."
               ],
               "answer": 0,
@@ -112,8 +104,7 @@
               "options": [
                 "DO NOT RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
                 "RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
-                "USE A DRY CLOTH TO REMOVE THE ELECTROSTATIC CHARGE.",
-                "DO NOT CLEAN THE PLASTIC SURFACES."
+                "USE A DRY CLOTH TO REMOVE THE ELECTROSTATIC CHARGE."
               ],
               "answer": 0,
               "explain": "不要用干布擦塑料表面，会造成刮痕和静电（scratches and an electrostatic charge）"
@@ -124,7 +115,6 @@
               "options": [
                 "警戒：确保极性正确防止设备损坏。",
                 "警告：确保极性正确防止人员受伤。",
-                "警戒：不用检查极性。",
                 "警戒：极性错误不会损坏设备。"
               ],
               "answer": 0,
@@ -136,8 +126,7 @@
               "options": [
                 "Assemble",
                 "assembly",
-                "ring",
-                "spring"
+                "ring"
               ],
               "answer": 0,
               "explain": "句首 Assemble 是动词（装配），句末 assembly 是名词（组件）；ring spring 环形弹簧"
@@ -148,7 +137,6 @@
               "options": [
                 "Don't pull out the No. 1 Engine fire handle.",
                 "Not pull out the No. 1 Engine fire handle.",
-                "Pull not out the No. 1 Engine fire handle.",
                 "Doesn't pull out the No. 1 Engine fire handle."
               ],
               "answer": 0,
@@ -171,8 +159,7 @@
               "options": [
                 "At each mask storage box",
                 "On the regulator",
-                "At one central storage box",
-                "On the pilot seat"
+                "At one central storage box"
               ],
               "answer": 0,
               "explain": "stow 存放；每个面罩存放盒里放一个面罩/调节器"
@@ -183,8 +170,7 @@
               "options": [
                 "Steadily",
                 "Quickly",
-                "All at once",
-                "Increase it first"
+                "All at once"
               ],
               "answer": 0,
               "explain": "steadily 平稳地、逐渐地"
@@ -195,8 +181,7 @@
               "options": [
                 "throw it away when it is dirty.",
                 "throw it away when it is clean.",
-                "clean it and install it again.",
-                "keep it when it is dirty."
+                "clean it and install it again."
               ],
               "answer": 0,
               "explain": "discard = throw away 丢弃。部件不干净就丢掉"
@@ -207,8 +192,7 @@
               "options": [
                 "Wash your hands",
                 "service other systems",
-                "wash the other systems",
-                "service the system with gloves"
+                "wash the other systems"
               ],
               "answer": 0,
               "explain": "before 前面的动作先做：先洗手，再维护其他系统"
@@ -219,7 +203,6 @@
               "options": [
                 "make sure the surface looks fully clean",
                 "remove the solvent",
-                "mix the detergent with the solvent",
                 "apply more solvent"
               ],
               "answer": 0,
@@ -231,8 +214,7 @@
               "options": [
                 "When the area is fully clean",
                 "After we do the steps one more time",
-                "When the area is dry",
-                "After we do the steps three times"
+                "When the area is dry"
               ],
               "answer": 0,
               "explain": "until 直到：重复上面的步骤，直到区域完全干净"
