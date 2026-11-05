@@ -32,31 +32,31 @@
                 "adverbial"
               ],
               "answer": 0,
-              "explain": "The team 是主语（subject），prepares 是谓语动词（verb），work 跟在 for 后面，是宾语（object）"
+              "explain": "The team 是主语（subject），prepares 是谓语动词（verb），work 是宾语（object）"
             },
             {
               "n": 3,
               "q": "Rub the area with lint-free cloth that is moist with solvent. According to the instruction, how to rub the area?",
               "options": [
-                "With a lint-free cloth that is moist with solvent",
-                "With a dry lint-free cloth",
-                "With a cloth that is moist with water",
-                "With solvent only, without a cloth"
+                "With lint-free cloth that is moist with solvent",
+                "With dry lint-free cloth",
+                "With cloth that is moist with water",
+                "With solvent only, without cloth"
               ],
               "answer": 0,
-              "explain": "lint-free 无绒的；moist with solvent 用溶剂浸湿的"
+              "explain": "lint-free cloth 不起毛的布；moist with solvent 用溶剂浸湿的"
             },
             {
               "n": 4,
-              "q": "Rewrite the sentence \"Attach DO NOT TOUCH flaps to spoiler lever.\" by using a passive voice.",
+              "q": "Rewrite the sentence \"Attach “DO NOT TOUCH flaps” to spoiler lever.\" by using a passive voice.",
               "options": [
-                "DO NOT TOUCH flaps are attached to spoiler lever.",
-                "DO NOT TOUCH flaps attach to spoiler lever.",
-                "Spoiler lever is attached DO NOT TOUCH flaps.",
-                "DO NOT TOUCH flaps are attaching to spoiler lever."
+                "“DO NOT TOUCH flaps” are attached to spoiler lever.",
+                "“DO NOT TOUCH flaps” attach to spoiler lever.",
+                "Spoiler lever is attached “DO NOT TOUCH flaps”.",
+                "“DO NOT TOUCH flaps” are attaching to spoiler lever."
               ],
               "answer": 0,
-              "explain": "被动语态 = be + 过去分词，原来的宾语 flaps 变成主语"
+              "explain": "被动语态 = be + 过去分词，原来的宾语 “DO NOT TOUCH flaps” 变成主语"
             },
             {
               "n": 5,
@@ -80,28 +80,28 @@
                 "Disconnected the electrical connectors."
               ],
               "answer": 0,
-              "explain": "被动语态 = be + 过去分词；disconnect 断开，electrical connector 电插头"
+              "explain": "被动语态 = be + 过去分词；electrical connectors 电连接器"
             },
             {
               "n": 7,
               "q": "______ calls attention to methods and procedures that must be followed precisely to avoid injury to persons.",
               "options": [
-                "WARNING",
-                "CAUTION",
-                "NOTE",
-                "REFERENCE"
+                "Warning",
+                "Caution",
+                "Note",
+                "Reference"
               ],
               "answer": 0,
-              "explain": "WARNING 防止人员受伤；CAUTION 防止设备损坏；NOTE 是补充说明"
+              "explain": "Warning（警告）防止人员受伤；Caution（警戒）防止设备损坏；Note 是补充说明"
             },
             {
               "n": 8,
               "q": "CUT OFF THE SHARP POINT OF STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM. SHARP FASTENERS CAN CAUSE INJURIES. This warning suggests that ______.",
               "options": [
-                "the sharp points of stud fasteners must be cut off where persons can touch them, to prevent injuries",
-                "persons must not touch any stud fasteners in the aircraft",
-                "sharp fasteners can cause damage to the equipment",
-                "stud fasteners must be installed in areas where persons can touch them"
+                "you should CUT OFF THE SHARP POINT OF STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM.",
+                "you should NOT TOUCH ANY STUD FASTENERS.",
+                "you should INSTALL SHARP STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM.",
+                "SHARP FASTENERS CAN CAUSE DAMAGE TO THE EQUIPMENT."
               ],
               "answer": 0,
               "explain": "在人能碰到的地方，把螺柱紧固件的尖头切掉，因为尖的紧固件会伤人"
@@ -110,25 +110,25 @@
               "n": 9,
               "q": "The suggestion of the \"CAUTION: DO NOT RUB THE PLASTIC SURFACES WITH A DRY CLOTH. THIS WILL CAUSE SCRATCHES AND AN ELECTROSTATIC CHARGE.\" is ______.",
               "options": [
-                "do not use a dry cloth on plastic surfaces, because it causes scratches and an electrostatic charge",
-                "rub the plastic surfaces with a dry cloth to remove the electrostatic charge",
-                "a dry cloth prevents scratches on plastic surfaces",
-                "plastic surfaces must not be cleaned at all"
+                "DO NOT RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
+                "RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
+                "USE A DRY CLOTH TO REMOVE THE ELECTROSTATIC CHARGE.",
+                "DO NOT CLEAN THE PLASTIC SURFACES."
               ],
               "answer": 0,
-              "explain": "不要用干布擦塑料表面，会刮花并产生静电（electrostatic charge）"
+              "explain": "不要用干布擦塑料表面，会造成刮痕和静电（scratches and an electrostatic charge）"
             },
             {
               "n": 10,
               "q": "\"CAUTION: MAKE SURE THE POLARITY IS CORRECT TO PREVENT DAMAGE TO EQUIPMENT.\" means ______.",
               "options": [
-                "the polarity must be correct, or the equipment can be damaged",
-                "incorrect polarity can cause injury to persons",
-                "the polarity does not need to be checked",
-                "the equipment must be damaged to correct the polarity"
+                "警戒：确保极性正确防止设备损坏。",
+                "警告：确保极性正确防止人员受伤。",
+                "警戒：不用检查极性。",
+                "警戒：极性错误不会损坏设备。"
               ],
               "answer": 0,
-              "explain": "polarity 极性。CAUTION 针对的是设备损坏，不是人员受伤"
+              "explain": "CAUTION = 警戒，针对设备损坏；WARNING = 警告，针对人员受伤。polarity 极性"
             },
             {
               "n": 11,
@@ -140,31 +140,30 @@
                 "spring"
               ],
               "answer": 0,
-              "explain": "句首 Assemble 是动词（装配），句末 assembly 是名词（组件）"
+              "explain": "句首 Assemble 是动词（装配），句末 assembly 是名词（组件）；ring spring 环形弹簧"
             },
             {
               "n": 12,
               "q": "The negative form of the sentence \"Pull out the No. 1 Engine fire handle.\" is ______.",
               "options": [
-                "Do not pull out the No. 1 Engine fire handle.",
+                "Don't pull out the No. 1 Engine fire handle.",
                 "Not pull out the No. 1 Engine fire handle.",
                 "Pull not out the No. 1 Engine fire handle.",
-                "Does not pull out the No. 1 Engine fire handle."
+                "Doesn't pull out the No. 1 Engine fire handle."
               ],
               "answer": 0,
-              "explain": "祈使句的否定 = Do not + 动词原形"
+              "explain": "祈使句的否定 = Don't / Do not + 动词原形"
             },
             {
               "n": 13,
               "q": "Install the screws to attach the valve to the skin. What's the usage of the screws?",
               "options": [
-                "To attach the valve to the skin",
-                "To remove the valve from the skin",
-                "To attach the skin to the frame",
-                "To seal the valve"
+                "screw",
+                "Attaching the valves.",
+                "To the skin."
               ],
-              "answer": 0,
-              "explain": "装螺钉是为了把活门固定到蒙皮上；to + 动词表示目的"
+              "answer": 1,
+              "explain": "装螺钉是为了固定活门（attach the valve）"
             },
             {
               "n": 14,
@@ -182,10 +181,10 @@
               "n": 15,
               "q": "According to the instruction, \"Decrease the pressure steadily.\" how to make the pressure low?",
               "options": [
-                "Decrease it steadily",
-                "Decrease it quickly",
-                "Release it all at once",
-                "Increase it steadily first"
+                "Steadily",
+                "Quickly",
+                "All at once",
+                "Increase it first"
               ],
               "answer": 0,
               "explain": "steadily 平稳地、逐渐地"
@@ -194,19 +193,19 @@
               "n": 16,
               "q": "If the component is not clean, discard it. According to the instruction, you should ______.",
               "options": [
-                "discard the component if it is not clean",
-                "clean the component and install it again",
-                "discard the component if it is clean",
-                "keep the component even if it is not clean"
+                "throw it away when it is dirty.",
+                "throw it away when it is clean.",
+                "clean it and install it again.",
+                "keep it when it is dirty."
               ],
               "answer": 0,
-              "explain": "discard 丢弃。部件不干净就丢掉"
+              "explain": "discard = throw away 丢弃。部件不干净就丢掉"
             },
             {
               "n": 17,
               "q": "Wash your hands before you service other systems. According to the instruction, you should ______ firstly.",
               "options": [
-                "wash your hands",
+                "Wash your hands",
                 "service other systems",
                 "wash the other systems",
                 "service the system with gloves"
@@ -224,7 +223,7 @@
                 "apply more solvent"
               ],
               "answer": 0,
-              "explain": "After 后面的动作先发生：先让表面完全干净，再用调好的清洁剂去掉溶剂"
+              "explain": "After 后面的动作先发生：先确保表面完全干净，再用调好的清洁剂去掉溶剂"
             },
             {
               "n": 19,
@@ -242,16 +241,15 @@
               "n": 20,
               "q": "Do not put your head in the fuel tank access hole unless you have the correct respirator on. According to the instruction, ______ is correct.",
               "options": [
-                "Put on the correct respirator before you put your head in the fuel tank access hole",
-                "You can put your head in the access hole without a respirator",
-                "Any respirator can be used in the fuel tank",
-                "Never put your head in the access hole, even with the correct respirator"
+                "你可以把头钻进油箱入口，即使你没有戴上了面罩。",
+                "你可以把头钻进油箱入口，没有戴上面罩也没关系。",
+                "如果你要把头钻进油箱入口，你必须正确地戴上了面罩。"
               ],
-              "answer": 0,
-              "explain": "unless 除非：只有戴上正确的呼吸器（respirator）才能把头伸进油箱检修孔"
+              "answer": 2,
+              "explain": "unless 除非：只有戴上正确的呼吸器（respirator）才能把头伸进油箱入口"
             }
           ],
-          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 1。卷子只有题目，选项和答案是整理时补的，以老师讲的为准"
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 1。正确答案按老师给的；第13、20题是老师的原选项，其余题的错误选项是整理时补的"
         },
         {
           "n": 2,
