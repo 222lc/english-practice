@@ -13,32 +13,50 @@
             {
               "n": 1,
               "q": "The hydraulic pump needs repairing at once. According to the statement, what needs repairing?",
+              "qzh": "液压泵需要立即修理。根据这句话，什么需要修理？",
               "options": [
                 "The hydraulic pump",
                 "The hydraulic fluid",
                 "The hydraulic reservoir"
               ],
+              "optzh": [
+                "液压泵",
+                "液压油",
+                "液压油箱"
+              ],
               "answer": 0,
-              "explain": "液压泵需要立即修理。need doing = 需要被……"
+              "explain": "need doing = 需要被……"
             },
             {
               "n": 2,
               "q": "In this sentence, \"The team prepares for work.\" \"Work\" is the ______.",
+              "qzh": "在句子 “The team prepares for work.”（团队为工作做准备）中，“Work” 是______。",
               "options": [
                 "object",
                 "subject",
                 "verb"
               ],
+              "optzh": [
+                "宾语",
+                "主语",
+                "动词"
+              ],
               "answer": 0,
-              "explain": "The team 是主语（subject），prepares 是谓语动词（verb），work 是宾语（object）"
+              "explain": "The team 是主语，prepares 是谓语动词，work 是宾语"
             },
             {
               "n": 3,
               "q": "Rub the area with lint-free cloth that is moist with solvent. According to the instruction, how to rub the area?",
+              "qzh": "用蘸有溶剂的不起毛的布擦拭该区域。根据这条指令，怎样擦拭该区域？",
               "options": [
                 "With lint-free cloth that is moist with solvent",
                 "With dry lint-free cloth",
                 "With cloth that is moist with water"
+              ],
+              "optzh": [
+                "用蘸有溶剂的不起毛的布",
+                "用干的不起毛的布",
+                "用蘸水的布"
               ],
               "answer": 0,
               "explain": "lint-free cloth 不起毛的布；moist with solvent 用溶剂浸湿的"
@@ -46,21 +64,33 @@
             {
               "n": 4,
               "q": "Rewrite the sentence \"Attach “DO NOT TOUCH flaps” to spoiler lever.\" by using a passive voice.",
+              "qzh": "用被动语态改写句子 “Attach “DO NOT TOUCH flaps” to spoiler lever.”（把“请勿触碰”标牌挂到扰流板手柄上）。",
               "options": [
                 "“DO NOT TOUCH flaps” are attached to spoiler lever.",
                 "“DO NOT TOUCH flaps” attach to spoiler lever.",
                 "“DO NOT TOUCH flaps” are attaching to spoiler lever."
               ],
+              "optzh": [
+                "“请勿触碰”标牌被挂到扰流板手柄上。（被动语态）",
+                "“请勿触碰”标牌挂到扰流板手柄上。（主动形式，不是被动）",
+                "“请勿触碰”标牌正在挂到扰流板手柄上。（进行时，不是被动）"
+              ],
               "answer": 0,
-              "explain": "被动语态 = be + 过去分词，原来的宾语 “DO NOT TOUCH flaps” 变成主语"
+              "explain": "被动语态 = be + 过去分词，原来的宾语变成主语"
             },
             {
               "n": 5,
               "q": "______ is used when our focus is on the object of the action.",
+              "qzh": "当我们关注的是动作的对象时，使用______。",
               "options": [
                 "Passive voice",
                 "Active voice",
                 "Negative form"
+              ],
+              "optzh": [
+                "被动语态",
+                "主动语态",
+                "否定形式"
               ],
               "answer": 0,
               "explain": "关注动作的对象（而不是谁做的）时用被动语态"
@@ -68,10 +98,16 @@
             {
               "n": 6,
               "q": "Rewrite the sentence \"Disconnect the electrical connectors.\" by using a passive voice.",
+              "qzh": "用被动语态改写句子 “Disconnect the electrical connectors.”（断开电连接器）。",
               "options": [
                 "The electrical connectors are disconnected.",
                 "The electrical connectors disconnect.",
                 "The electrical connectors are disconnecting."
+              ],
+              "optzh": [
+                "电连接器被断开。（被动语态）",
+                "电连接器断开。（主动形式，不是被动）",
+                "电连接器正在断开。（进行时，不是被动）"
               ],
               "answer": 0,
               "explain": "被动语态 = be + 过去分词；electrical connectors 电连接器"
@@ -79,10 +115,16 @@
             {
               "n": 7,
               "q": "______ calls attention to methods and procedures that must be followed precisely to avoid injury to persons.",
+              "qzh": "______提醒注意那些必须严格遵守的方法和程序，以避免人员受伤。",
               "options": [
                 "Warning",
                 "Caution",
                 "Note"
+              ],
+              "optzh": [
+                "警告",
+                "警戒",
+                "注意（补充说明）"
               ],
               "answer": 0,
               "explain": "Warning（警告）防止人员受伤；Caution（警戒）防止设备损坏；Note 是补充说明"
@@ -90,32 +132,50 @@
             {
               "n": 8,
               "q": "CUT OFF THE SHARP POINT OF STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM. SHARP FASTENERS CAN CAUSE INJURIES. This warning suggests that ______.",
+              "qzh": "在人员可能碰到的区域，切掉螺柱紧固件的尖端。尖锐的紧固件会造成人员受伤。这条警告建议______。",
               "options": [
                 "you should CUT OFF THE SHARP POINT OF STUD FASTENERS IN AREAS WHERE PERSONS CAN TOUCH THEM.",
                 "you should NOT TOUCH ANY STUD FASTENERS.",
                 "SHARP FASTENERS CAN CAUSE DAMAGE TO THE EQUIPMENT."
               ],
+              "optzh": [
+                "你应该在人员可能碰到的区域切掉螺柱紧固件的尖端。",
+                "你不应该碰任何螺柱紧固件。",
+                "尖锐的紧固件会损坏设备。"
+              ],
               "answer": 0,
-              "explain": "在人能碰到的地方，把螺柱紧固件的尖头切掉，因为尖的紧固件会伤人"
+              "explain": "stud fastener 螺柱紧固件"
             },
             {
               "n": 9,
               "q": "The suggestion of the \"CAUTION: DO NOT RUB THE PLASTIC SURFACES WITH A DRY CLOTH. THIS WILL CAUSE SCRATCHES AND AN ELECTROSTATIC CHARGE.\" is ______.",
+              "qzh": "“警戒：不要用干布擦塑料表面。这会造成刮痕和静电。”这条的建议是______。",
               "options": [
                 "DO NOT RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
                 "RUB THE PLASTIC SURFACES WITH A DRY CLOTH.",
                 "USE A DRY CLOTH TO REMOVE THE ELECTROSTATIC CHARGE."
               ],
+              "optzh": [
+                "不要用干布擦塑料表面。",
+                "要用干布擦塑料表面。",
+                "用干布去除静电。"
+              ],
               "answer": 0,
-              "explain": "不要用干布擦塑料表面，会造成刮痕和静电（scratches and an electrostatic charge）"
+              "explain": "scratches and an electrostatic charge 刮痕和静电"
             },
             {
               "n": 10,
               "q": "\"CAUTION: MAKE SURE THE POLARITY IS CORRECT TO PREVENT DAMAGE TO EQUIPMENT.\" means ______.",
+              "qzh": "“CAUTION（警戒）：确保极性正确，以防止设备损坏。”的意思是______。",
               "options": [
                 "警戒：确保极性正确防止设备损坏。",
                 "警告：确保极性正确防止人员受伤。",
                 "警戒：极性错误不会损坏设备。"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
               ],
               "answer": 0,
               "explain": "CAUTION = 警戒，针对设备损坏；WARNING = 警告，针对人员受伤。polarity 极性"
@@ -123,21 +183,33 @@
             {
               "n": 11,
               "q": "Find the action word in the instruction \"Assemble the ring spring assembly.\"",
+              "qzh": "找出指令 “Assemble the ring spring assembly.”（装配环形弹簧组件）中的动作词。",
               "options": [
                 "Assemble",
                 "assembly",
                 "ring"
               ],
+              "optzh": [
+                "装配（动词）",
+                "组件（名词）",
+                "环（名词）"
+              ],
               "answer": 0,
-              "explain": "句首 Assemble 是动词（装配），句末 assembly 是名词（组件）；ring spring 环形弹簧"
+              "explain": "句首 Assemble 是动词，句末 assembly 是名词；ring spring 环形弹簧"
             },
             {
               "n": 12,
               "q": "The negative form of the sentence \"Pull out the No. 1 Engine fire handle.\" is ______.",
+              "qzh": "句子 “Pull out the No. 1 Engine fire handle.”（拉出1号发动机灭火手柄）的否定形式是______。",
               "options": [
                 "Don't pull out the No. 1 Engine fire handle.",
                 "Not pull out the No. 1 Engine fire handle.",
                 "Doesn't pull out the No. 1 Engine fire handle."
+              ],
+              "optzh": [
+                "不要拉出1号发动机灭火手柄。",
+                "（错误：祈使句否定要用 Don't）",
+                "（错误：祈使句不能用 Doesn't）"
               ],
               "answer": 0,
               "explain": "祈使句的否定 = Don't / Do not + 动词原形"
@@ -145,32 +217,50 @@
             {
               "n": 13,
               "q": "Install the screws to attach the valve to the skin. What's the usage of the screws?",
+              "qzh": "安装螺钉，把活门固定到蒙皮上。螺钉的用途是什么？",
               "options": [
                 "screw",
                 "Attaching the valves.",
                 "To the skin."
               ],
+              "optzh": [
+                "螺钉",
+                "固定活门。",
+                "到蒙皮上。"
+              ],
               "answer": 1,
-              "explain": "装螺钉是为了固定活门（attach the valve）"
+              "explain": "to attach 表示目的：装螺钉是为了固定活门"
             },
             {
               "n": 14,
               "q": "According to the instruction, \"Stow a mask/regulator at each mask storage box.\" where shall we put the mask?",
+              "qzh": "根据指令 “Stow a mask/regulator at each mask storage box.”（在每个面罩存放盒里存放一个面罩/调节器），我们应该把面罩放在哪里？",
               "options": [
                 "At each mask storage box",
                 "On the regulator",
                 "At one central storage box"
               ],
+              "optzh": [
+                "在每个面罩存放盒里",
+                "在调节器上",
+                "在一个集中的存放盒里"
+              ],
               "answer": 0,
-              "explain": "stow 存放；每个面罩存放盒里放一个面罩/调节器"
+              "explain": "stow 存放"
             },
             {
               "n": 15,
               "q": "According to the instruction, \"Decrease the pressure steadily.\" how to make the pressure low?",
+              "qzh": "根据指令 “Decrease the pressure steadily.”（平稳地降低压力），怎样让压力降低？",
               "options": [
                 "Steadily",
                 "Quickly",
                 "All at once"
+              ],
+              "optzh": [
+                "平稳地",
+                "快速地",
+                "一下子全部"
               ],
               "answer": 0,
               "explain": "steadily 平稳地、逐渐地"
@@ -178,21 +268,33 @@
             {
               "n": 16,
               "q": "If the component is not clean, discard it. According to the instruction, you should ______.",
+              "qzh": "如果部件不干净，就把它丢弃。根据这条指令，你应该______。",
               "options": [
                 "throw it away when it is dirty.",
                 "throw it away when it is clean.",
                 "clean it and install it again."
               ],
+              "optzh": [
+                "部件脏的时候把它扔掉。",
+                "部件干净的时候把它扔掉。",
+                "把它清洁后重新安装。"
+              ],
               "answer": 0,
-              "explain": "discard = throw away 丢弃。部件不干净就丢掉"
+              "explain": "discard = throw away 丢弃"
             },
             {
               "n": 17,
               "q": "Wash your hands before you service other systems. According to the instruction, you should ______ firstly.",
+              "qzh": "在维护其他系统之前先洗手。根据这条指令，你首先应该______。",
               "options": [
                 "Wash your hands",
                 "service other systems",
                 "wash the other systems"
+              ],
+              "optzh": [
+                "洗手",
+                "维护其他系统",
+                "清洗其他系统"
               ],
               "answer": 0,
               "explain": "before 前面的动作先做：先洗手，再维护其他系统"
@@ -200,35 +302,53 @@
             {
               "n": 18,
               "q": "After the surface looks fully clean, remove the solvent with a mixed detergent. According to the instruction, ______ firstly.",
+              "qzh": "表面看起来完全干净后，用调配好的清洁剂去除溶剂。根据这条指令，首先______。",
               "options": [
                 "make sure the surface looks fully clean",
                 "remove the solvent",
                 "apply more solvent"
               ],
+              "optzh": [
+                "确保表面看起来完全干净",
+                "去除溶剂",
+                "涂更多溶剂"
+              ],
               "answer": 0,
-              "explain": "After 后面的动作先发生：先确保表面完全干净，再用调好的清洁剂去掉溶剂"
+              "explain": "After 后面的动作先发生"
             },
             {
               "n": 19,
               "q": "Do the above steps again until the area is fully clean. According to the instruction, when shall we stop doing the above steps again?",
+              "qzh": "重复上面的步骤，直到该区域完全干净。根据这条指令，什么时候停止重复上面的步骤？",
               "options": [
                 "When the area is fully clean",
                 "After we do the steps one more time",
                 "When the area is dry"
               ],
+              "optzh": [
+                "当该区域完全干净时",
+                "再做一遍之后",
+                "当该区域干了时"
+              ],
               "answer": 0,
-              "explain": "until 直到：重复上面的步骤，直到区域完全干净"
+              "explain": "until 直到"
             },
             {
               "n": 20,
               "q": "Do not put your head in the fuel tank access hole unless you have the correct respirator on. According to the instruction, ______ is correct.",
+              "qzh": "除非戴上了正确的呼吸面罩，否则不要把头伸进油箱检修口。根据这条指令，______是正确的。",
               "options": [
                 "你可以把头钻进油箱入口，即使你没有戴上了面罩。",
                 "你可以把头钻进油箱入口，没有戴上面罩也没关系。",
                 "如果你要把头钻进油箱入口，你必须正确地戴上了面罩。"
               ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
               "answer": 2,
-              "explain": "unless 除非：只有戴上正确的呼吸器（respirator）才能把头伸进油箱入口"
+              "explain": "unless 除非；respirator 呼吸器（面罩）"
             }
           ],
           "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 1。正确答案按老师给的；第13、20题是老师的原选项，其余题的错误选项是整理时补的"
