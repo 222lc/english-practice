@@ -26,13 +26,13 @@
               "n": 2,
               "q": "In this sentence, \"The team prepares for work.\" \"Work\" is the ______.",
               "options": [
-                "noun",
+                "object",
+                "subject",
                 "verb",
-                "adjective",
-                "adverb"
+                "adverbial"
               ],
               "answer": 0,
-              "explain": "work 在介词 for 后面，是名词“工作”；句中的动词是 prepares"
+              "explain": "The team 是主语（subject），prepares 是谓语动词（verb），work 跟在 for 后面，是宾语（object）"
             },
             {
               "n": 3,

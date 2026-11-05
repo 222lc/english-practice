@@ -307,7 +307,7 @@
     html += '<button type="submit" class="btn primary">开始练习</button></form>';
     html += '<button class="btn ghost wide" data-browse="' + k + '">浏览本单元全部内容</button>';
     const ex = examStats(k);
-    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">限时（每题 ' + SEC_PER_Q + ' 秒），中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
+    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">不限时，中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
       '<div class="field"><div class="chips">' + [20, 50, 100].map((n) => radio('exn', n, n + ' 题', n === 50)).join('') + '</div></div>' +
       '<label class="switch"><input type="checkbox" id="exweak"><span>薄弱词优先（多抽常错的题）</span></label>' +
       '<button class="btn primary" id="exam">开始模拟考试</button></div>';
@@ -367,7 +367,7 @@
     html += '<p class="count" id="cnt"></p><button type="submit" class="btn primary">开始练习</button></form>';
     html += '<button class="btn ghost wide" data-browse="' + k + '">浏览全部卷子内容</button>';
     const ex = examStats(k);
-    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">从' + (ready.length < u.papers.length ? '已录入的 ' + ready.length + ' 张' : '全部 ' + u.papers.length + ' 张') + '卷子里抽题，限时（每题 ' + SEC_PER_Q + ' 秒），中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
+    html += '<div class="card"><div class="label">模拟考试</div><p class="sub">从' + (ready.length < u.papers.length ? '已录入的 ' + ready.length + ' 张' : '全部 ' + u.papers.length + ' 张') + '卷子里抽题，不限时，中途不显示对错，交卷后出分数。' + (ex.n ? '已考 ' + ex.n + ' 次，最高 ' + ex.best + ' 分。' : '') + '</p>' +
       '<div class="field"><div class="chips">' + [20, WEEK_EXAM_N, 50].map((n) => radio('exn', n, n + ' 题', n === WEEK_EXAM_N)).join('') + '</div></div>' +
       '<label class="switch"><input type="checkbox" id="exweak"><span>薄弱词优先（多抽常错的题）</span></label>' +
       '<button class="btn primary" id="exam">开始模拟考试</button></div>';
@@ -448,7 +448,6 @@
   }
 
   // ---------- 模拟考试 ----------
-  const SEC_PER_Q = 30;
   const WEEK_EXAM_N = 30; // 周考：从本周卷子里出 30 题
   function examStats(k) {
     const r = store.exams.filter((e) => e.k === k);
@@ -477,21 +476,13 @@
     const u = unitOf(k); if (!u) return false;
     const qs = examKeys(u, n, weak).map(makeQuestion).filter(Boolean);
     if (!qs.length) return false;
-    const now = Date.now();
-    X = { k, weak, title: u.title + ' 模拟考' + (weak ? '（薄弱词）' : ''), qs, picks: qs.map(() => null), i: 0, start: now, end: now + qs.length * SEC_PER_Q * 1000 };
-    X.timer = setInterval(tick, 1000);
+    // 不限时，只记录用时
+    X = { k, weak, title: u.title + ' 模拟考' + (weak ? '（薄弱词）' : ''), qs, picks: qs.map(() => null), i: 0, start: Date.now() };
     examQ();
   }
-  function tick() {
-    if (!X) return;
-    const left = X.end - Date.now();
-    const el = document.getElementById('timer');
-    if (el) { el.textContent = fmt(left); el.classList.toggle('warn', left < 60000); }
-    if (left <= 0) submitExam();
-  }
   function examQ() {
-    const q = X.qs[X.i], n = X.qs.length, done = X.picks.filter((p) => p !== null).length, left = X.end - Date.now();
-    let html = '<header class="bar-top"><button class="back" id="xquit">‹ 退出</button><h1>' + esc(X.title) + '</h1><span class="prog timer' + (left < 60000 ? ' warn' : '') + '" id="timer">' + fmt(left) + '</span></header>';
+    const q = X.qs[X.i], n = X.qs.length, done = X.picks.filter((p) => p !== null).length;
+    let html = '<header class="bar-top"><button class="back" id="xquit">‹ 退出</button><h1>' + esc(X.title) + '</h1><span class="prog">' + done + '/' + n + '</span></header>';
     html += '<div class="bar thin"><i style="width:' + (done / n) * 100 + '%"></i></div>';
     html += '<div class="q card"><div class="q-type">第 ' + (X.i + 1) + ' / ' + n + ' 题 · ' + TYPES[q.type].label + star(q.it.id) + '</div><div class="q-prompt ' + (q.it.kind !== 'word' ? 'long' : '') + '">' + esc(q.prompt) +
       (q.promptEn && canSpeak ? ' <button class="say" data-say="' + esc(q.it.en) + '">🔊</button>' : '') + '</div></div><div class="opts">';
@@ -505,7 +496,7 @@
     document.getElementById('xquit').onclick = (e) => {
       const b = e.currentTarget;
       if (!b.dataset.armed) { b.dataset.armed = '1'; b.textContent = '再点一次退出（不计分）'; b.classList.add('warn'); return; }
-      clearInterval(X.timer); const k = X.k; X = null; openUnit(k);
+      const k = X.k; X = null; openUnit(k);
     };
     document.querySelectorAll('.xsubmit').forEach((b) => (b.onclick = () => {
       const miss = X.picks.filter((p) => p === null).length;
@@ -521,7 +512,6 @@
   }
   function submitExam() {
     if (!X) return;
-    clearInterval(X.timer);
     const x = X; X = null;
     const prev = examStats(x.k);
     let right = 0; const wrong = [];
@@ -531,7 +521,7 @@
       if (ok) { right++; s.right++; s.streak++; } else { s.wrong++; s.streak = 0; wrong.push({ q, pick: p }); }
       s.t = Date.now(); store.stats[q.key] = s;
     });
-    const rec = { k: x.k, weak: !!x.weak, title: x.title, t: Date.now(), n: x.qs.length, right, score: Math.round((right / x.qs.length) * 100), secs: Math.round((Math.min(Date.now(), x.end) - x.start) / 1000) };
+    const rec = { k: x.k, weak: !!x.weak, title: x.title, t: Date.now(), n: x.qs.length, right, score: Math.round((right / x.qs.length) * 100), secs: Math.round((Date.now() - x.start) / 1000) };
     store.exams.push(rec);
     if (store.exams.length > 200) store.exams.splice(0, store.exams.length - 200);
     save();
