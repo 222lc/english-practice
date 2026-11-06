@@ -357,7 +357,383 @@
           "n": 2,
           "title": "第2天",
           "items": [],
-          "questions": []
+          "questions": [
+            {
+              "n": 1,
+              "q": "In ATA100, Towing and taxiing is in ______.",
+              "qzh": "在 ATA100 中，牵引和滑行属于______。",
+              "options": [
+                "ATA9",
+                "ATA7",
+                "ATA10"
+              ],
+              "optzh": [
+                "ATA 第9章（牵引和滑行）",
+                "ATA 第7章（顶升和支撑）",
+                "ATA 第10章（停放、系留、封存和恢复使用）"
+              ],
+              "answer": 0,
+              "explain": "towing 牵引；taxiing 滑行"
+            },
+            {
+              "n": 2,
+              "q": "The reference of maintenance of aileron is contained in ______.",
+              "qzh": "副翼维护的参考资料包含在______中。",
+              "options": [
+                "ATA27",
+                "ATA32",
+                "ATA36"
+              ],
+              "optzh": [
+                "ATA 第27章（飞行操纵）",
+                "ATA 第32章（起落架）",
+                "ATA 第36章（气源）"
+              ],
+              "answer": 0,
+              "explain": "aileron 副翼，属于飞行操纵系统（第27章）"
+            },
+            {
+              "n": 3,
+              "q": "ATA73 is ______.",
+              "qzh": "ATA73 是______。",
+              "options": [
+                "Engine fuel and control",
+                "Engine oil",
+                "Ignition"
+              ],
+              "optzh": [
+                "发动机燃油和控制",
+                "发动机滑油",
+                "点火"
+              ],
+              "answer": 0,
+              "explain": "73 是发动机燃油和控制；79 是滑油，74 是点火"
+            },
+            {
+              "n": 4,
+              "q": "Choose an avionic system.",
+              "qzh": "选出一个航电系统。",
+              "options": [
+                "Communication.",
+                "Starting.",
+                "Flight controls."
+              ],
+              "optzh": [
+                "通信。",
+                "起动。",
+                "飞行操纵。"
+              ],
+              "answer": 0,
+              "explain": "通信（第23章）属于航电；起动（第80章）属于动力装置；飞行操纵（第27章）属于机体系统"
+            },
+            {
+              "n": 5,
+              "q": "Choose a task of power plant group.",
+              "qzh": "选出一项属于动力装置组的工作。",
+              "options": [
+                "Remove the nose cowl.",
+                "Install the flap track.",
+                "Disconnect electrical power."
+              ],
+              "optzh": [
+                "拆下进气整流罩。",
+                "安装襟翼滑轨。",
+                "断开电源。"
+              ],
+              "answer": 0,
+              "explain": "nose cowl 是发动机前端的进气整流罩，属于动力装置；flap track 襟翼滑轨属于飞行操纵/机翼；断电属于电源"
+            },
+            {
+              "n": 6,
+              "q": "\"B-HKE\" is:",
+              "qzh": "“B-HKE”是：",
+              "options": [
+                "A/C registration number",
+                "Aircraft type",
+                "Engine serial number"
+              ],
+              "optzh": [
+                "飞机注册号",
+                "飞机型号",
+                "发动机序列号"
+              ],
+              "answer": 0,
+              "explain": "A/C = aircraft 飞机；registration number 注册号"
+            },
+            {
+              "n": 7,
+              "q": "B747-400 is:",
+              "qzh": "B747-400 是：",
+              "options": [
+                "Aircraft type",
+                "A/C registration number",
+                "Engine type"
+              ],
+              "optzh": [
+                "飞机型号",
+                "飞机注册号",
+                "发动机型号"
+              ],
+              "answer": 0,
+              "explain": "747 是机型，-400 是改型"
+            },
+            {
+              "n": 8,
+              "q": "Zone 200 is:",
+              "qzh": "200 区是：",
+              "options": [
+                "fuselage upper section",
+                "fuselage lower section",
+                "left wing"
+              ],
+              "optzh": [
+                "机身上部",
+                "机身下部",
+                "左机翼"
+              ],
+              "answer": 0,
+              "explain": "100 机身下部，200 机身上部，300 尾翼，400 动力装置/短舱，500 左机翼，600 右机翼，700 起落架及舱门，800 舱门"
+            },
+            {
+              "n": 9,
+              "q": "\"Refueling an aircraft\" is classified as:",
+              "qzh": "“给飞机加油”归类为：",
+              "options": [
+                "servicing",
+                "repair",
+                "inspection"
+              ],
+              "optzh": [
+                "勤务",
+                "修理",
+                "检查"
+              ],
+              "answer": 0,
+              "explain": "refuel 加油；servicing 勤务（第12章）"
+            },
+            {
+              "n": 10,
+              "q": "\"Cleaning landing gear control cables\" is:",
+              "qzh": "“清洁起落架操纵钢索”是：",
+              "options": [
+                "a task.",
+                "a trade.",
+                "a zone."
+              ],
+              "optzh": [
+                "一项工作。",
+                "一个工种。",
+                "一个区域。"
+              ],
+              "answer": 0,
+              "explain": "清洁钢索是一项具体的维修工作（task）；trade 是工种，zone 是区域"
+            },
+            {
+              "n": 11,
+              "q": "Service Bulletins are originated by:",
+              "qzh": "服务通告（SB）由谁编发：",
+              "options": [
+                "the manufacturer",
+                "the airline",
+                "the civil aviation authority"
+              ],
+              "optzh": [
+                "制造厂家",
+                "航空公司",
+                "民航局（适航当局）"
+              ],
+              "answer": 0,
+              "explain": "SB 由制造厂家发布；适航指令 AD 才由适航当局发布"
+            },
+            {
+              "n": 12,
+              "q": "Removal/Installation information can be found in:",
+              "qzh": "拆卸/安装信息可以在哪里找到：",
+              "options": [
+                "P401-499",
+                "P201-299",
+                "P501-599"
+              ],
+              "optzh": [
+                "401–499页",
+                "201–299页（维护实施）",
+                "501–599页（调整/测试）"
+              ],
+              "answer": 0,
+              "explain": "AMM 页码块 401–499 是拆卸/安装"
+            },
+            {
+              "n": 13,
+              "q": "The Page 208 in AMM is about:",
+              "qzh": "AMM 中的第 208 页是关于：",
+              "options": [
+                "Maintenance Practice",
+                "Removal/Installation",
+                "Adjustment/Test"
+              ],
+              "optzh": [
+                "维护实施（201–299页）",
+                "拆卸/安装（401–499页）",
+                "调整/测试（501–599页）"
+              ],
+              "answer": 0,
+              "explain": "AMM 页码块：1–99 描述与工作原理，101 排故，201 维护实施，301 勤务，401 拆装，501 调整/测试，601 检查，701 清洁/喷漆，801 批准的修理"
+            },
+            {
+              "n": 14,
+              "q": "\"Effectivity: 004,006 with SB32-211\" means:",
+              "qzh": "“Effectivity: 004,006 with SB32-211”（有效性：004、006，带 SB32-211）的意思是：",
+              "options": [
+                "适用于定制飞机中有效代码为004或006的飞机",
+                "适用于定制飞机中有效代码为004和006的飞机",
+                "适用于定制飞机中有效代码为004和006并有SB32-211的飞机"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 2,
+              "explain": "004,006 是有效性代码；with SB32-211 表示还必须执行了 SB32-211"
+            },
+            {
+              "n": 15,
+              "q": "Turn to Page ______ for the transmitter adjustment.",
+              "qzh": "翻到第______页查看传感器（transmitter）的调整。",
+              "options": [
+                "501-599",
+                "401-499",
+                "201-299"
+              ],
+              "optzh": [
+                "501–599（调整/测试）",
+                "401–499（拆卸/安装）",
+                "201–299（维护实施）"
+              ],
+              "answer": 0,
+              "explain": "501 to 599 Adjustment/Test 调校/测试"
+            },
+            {
+              "n": 16,
+              "q": "The nod \".\" in front of the name of a part means the part is:",
+              "qzh": "零件名称前面的点“.”表示这个零件是：",
+              "options": [
+                "an assembly.",
+                "not illustrated.",
+                "an attaching part."
+              ],
+              "optzh": [
+                "组件。",
+                "图中没画出。",
+                "连接件。"
+              ],
+              "answer": 0,
+              "explain": "卷子上 nod 应为 dot（点）。老师备注：部件名前加“.”表示该项目是上一级的组成部分"
+            },
+            {
+              "n": 17,
+              "q": "If there is no spare of a part, you will:",
+              "qzh": "如果某个零件没有备件，你会：",
+              "options": [
+                "look for optional part number or interchangeable part number.",
+                "use any part with a similar name.",
+                "skip installing the part."
+              ],
+              "optzh": [
+                "查找可选件号或可互换件号。",
+                "随便用一个名字相近的零件。",
+                "不装这个零件。"
+              ],
+              "answer": 0,
+              "explain": "spare 备件；optional part number 可选件号；interchangeable 可互换的"
+            },
+            {
+              "n": 18,
+              "q": "In IPC index, 56-23-01-04-308, \"04\" stands for ______.",
+              "qzh": "在 IPC 索引 56-23-01-04-308 中，“04”代表______。",
+              "options": [
+                "figure number",
+                "item number",
+                "section number"
+              ],
+              "optzh": [
+                "图号",
+                "项目号",
+                "节号"
+              ],
+              "answer": 0,
+              "explain": "56 章-23 节-01 主题-04 图号-308 项目号"
+            },
+            {
+              "n": 19,
+              "q": "In the Nomenclature column of detailed parts list, you will find ______.",
+              "qzh": "在详细零件清单的名称（Nomenclature）栏中，你会找到______。",
+              "options": [
+                "Effectivity",
+                "Quantity needed",
+                "Optional part number"
+              ],
+              "optzh": [
+                "有效性",
+                "所需数量",
+                "可选件号"
+              ],
+              "answer": 2,
+              "explain": "老师答案：名称栏里能找到供应商代码（vendor code）和可选件号；有效性和数量各有单独一栏"
+            },
+            {
+              "n": 20,
+              "q": "In the AIPC part list, V92215 is ______.",
+              "qzh": "在 AIPC 零件清单中，V92215 是______。",
+              "options": [
+                "supplier code/vendor code",
+                "part number",
+                "effectivity code"
+              ],
+              "optzh": [
+                "供应商代码",
+                "件号",
+                "有效性代码"
+              ],
+              "answer": 0,
+              "explain": "V 加五位数字是供应商（厂家）代码"
+            },
+            {
+              "n": 21,
+              "q": "Chapter ______ is contained in SRM.",
+              "qzh": "SRM 中包含第______章。",
+              "options": [
+                "51-57",
+                "21-49",
+                "71-80"
+              ],
+              "optzh": [
+                "51–57（结构）",
+                "21–49（机体系统）",
+                "71–80（动力装置）"
+              ],
+              "answer": 0,
+              "explain": "在 ATA100 里，51–57 章是飞机的结构部分，在结构修理手册（SRM）里"
+            },
+            {
+              "n": 22,
+              "q": "\"This repair does not apply to the areas that follow:\" 这样的陈述说明______。",
+              "qzh": "“本修理不适用于下列区域：”这样的陈述说明______。",
+              "options": [
+                "Applicability",
+                "Repair procedure",
+                "Repair material"
+              ],
+              "optzh": [
+                "适用范围",
+                "修理步骤",
+                "修理材料"
+              ],
+              "answer": 0,
+              "explain": "does not apply to 不适用于；applicability 适用范围"
+            }
+          ],
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 2。正确答案按老师给的；第4、5、10、14、16、19题是老师的原选项，其余题的错误选项是整理时补的"
         },
         {
           "n": 3,
