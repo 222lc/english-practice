@@ -739,7 +739,366 @@
           "n": 3,
           "title": "第3天",
           "items": [],
-          "questions": []
+          "questions": [
+            {
+              "n": 1,
+              "q": "In aeronautical telecommunications, ______ stands for letter M.",
+              "qzh": "在航空无线电通话中，______代表字母 M。",
+              "options": [
+                "Mike",
+                "Mexico",
+                "November"
+              ],
+              "optzh": [
+                "通话字母，代表 M",
+                "墨西哥（不是通话字母）",
+                "通话字母，代表 N"
+              ],
+              "answer": 0,
+              "explain": "航空通话字母表：M = Mike，N = November"
+            },
+            {
+              "n": 2,
+              "q": "In aeronautical telecommunications, ______ stands for letter O.",
+              "qzh": "在航空无线电通话中，______代表字母 O。",
+              "options": [
+                "Oscar",
+                "Omega",
+                "Papa"
+              ],
+              "optzh": [
+                "通话字母，代表 O",
+                "欧米伽（希腊字母，不是通话字母）",
+                "通话字母，代表 P"
+              ],
+              "answer": 0,
+              "explain": "航空通话字母表：O = Oscar，P = Papa"
+            },
+            {
+              "n": 3,
+              "q": "In aeronautical telecommunications, ______ stands for letter V.",
+              "qzh": "在航空无线电通话中，______代表字母 V。",
+              "options": [
+                "Victor",
+                "Victory",
+                "Whiskey"
+              ],
+              "optzh": [
+                "通话字母，代表 V",
+                "胜利（不是通话字母）",
+                "通话字母，代表 W"
+              ],
+              "answer": 0,
+              "explain": "航空通话字母表：V = Victor，W = Whiskey"
+            },
+            {
+              "n": 4,
+              "q": "In aeronautical telecommunications, ______ stands for letter K.",
+              "qzh": "在航空无线电通话中，______代表字母 K。",
+              "options": [
+                "Kilo",
+                "King",
+                "Lima"
+              ],
+              "optzh": [
+                "通话字母，代表 K",
+                "国王（不是通话字母）",
+                "通话字母，代表 L"
+              ],
+              "answer": 0,
+              "explain": "航空通话字母表：K = Kilo，L = Lima"
+            },
+            {
+              "n": 5,
+              "q": "When the aircraft is flying in the sky, the pilot says ______ to state the airplane registration number (B-HKJ).",
+              "qzh": "飞机在空中飞行时，飞行员说______来报出飞机注册号（B-HKJ）。",
+              "options": [
+                "Bravo dash Hotel Kilo Juliet",
+                "Bravo dash Hotel Lima Juliet",
+                "Beta dash Hotel Kilo Juliet"
+              ],
+              "optzh": [
+                "B-HKJ",
+                "B-HLJ",
+                "（B 应读 Bravo，不是 Beta）"
+              ],
+              "answer": 0,
+              "explain": "B = Bravo，H = Hotel，K = Kilo，J = Juliet，“-” 读 dash"
+            },
+            {
+              "n": 6,
+              "q": "BS stands for ______.",
+              "qzh": "BS 代表______。",
+              "options": [
+                "Body Station",
+                "Body Section",
+                "Balance Station"
+              ],
+              "optzh": [
+                "机身站位",
+                "机身段",
+                "平衡站位"
+              ],
+              "answer": 0,
+              "explain": "BS = Body Station 机身站位；BBL 机身纵剖线；BWL 机身水线"
+            },
+            {
+              "n": 7,
+              "q": "CG means ______.",
+              "qzh": "CG 的意思是______。",
+              "options": [
+                "重心",
+                "中心线",
+                "压力中心"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "CG = center of gravity 重心；中心线是 centerline，压力中心是 center of pressure"
+            },
+            {
+              "n": 8,
+              "q": "The Body Buttock Line is a/an ______ plane parallel to the fuselage vertical centerline plane, BBL 0.00.",
+              "qzh": "机身纵剖线（BBL）是一个平行于机身垂直中心平面（BBL 0.00）的______平面。",
+              "options": [
+                "vertical",
+                "horizontal",
+                "inclined"
+              ],
+              "optzh": [
+                "垂直的",
+                "水平的",
+                "倾斜的"
+              ],
+              "answer": 0,
+              "explain": "BBL 平行于机身垂直中心面，所以也是垂直面；水平面是 BWL（水线）"
+            },
+            {
+              "n": 9,
+              "q": "______ is a plane vertical to the BBL centerline plane and parallel to the fuselage centerline.",
+              "qzh": "______是一个垂直于 BBL 中心平面、并平行于机身中心线的平面。",
+              "options": [
+                "BWL",
+                "BBL",
+                "BS"
+              ],
+              "optzh": [
+                "机身水线（Body Water Line）",
+                "机身纵剖线（Body Buttock Line）",
+                "机身站位（Body Station）"
+              ],
+              "answer": 0,
+              "explain": "BWL 是水平面：垂直于 BBL 中心面，平行于机身中心线；BS 垂直于机身中心线"
+            },
+            {
+              "n": 10,
+              "q": "The plane is measured from a point 92.50 inches forward of the nose. 这句话翻译为：______",
+              "qzh": "这句话怎么翻译？",
+              "options": [
+                "此参照面从机头前方92.50英寸处开始测量。",
+                "此参照面从机头后方92.50英寸处开始测量。",
+                "此参照面从机头前方92.50厘米处开始测量。"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "forward of the nose 机头前方；inch 英寸"
+            },
+            {
+              "n": 11,
+              "q": "Jack 意思是：______",
+              "qzh": "Jack 的意思是______。",
+              "options": [
+                "顶升",
+                "支撑",
+                "牵引"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "jack 顶升（名词是千斤顶）；shoring 支撑；towing 牵引"
+            },
+            {
+              "n": 12,
+              "q": "Which one is the primary jacking point?",
+              "qzh": "哪一个是主顶升点？",
+              "options": [
+                "Right wing root",
+                "Right wing tip",
+                "Tail"
+              ],
+              "optzh": [
+                "右机翼翼根",
+                "右机翼翼尖",
+                "机尾"
+              ],
+              "answer": 0,
+              "explain": "primary jacking point 主顶升点；wing root 翼根，wing tip 翼尖"
+            },
+            {
+              "n": 13,
+              "q": "The primary jacking points are used to ______.",
+              "qzh": "主顶升点用来______。",
+              "options": [
+                "lift and lower the airplane",
+                "make the airplane stable",
+                "tow the airplane"
+              ],
+              "optzh": [
+                "顶起和放下飞机",
+                "让飞机保持稳定",
+                "牵引飞机"
+              ],
+              "answer": 0,
+              "explain": "主顶升点用来顶起和放下飞机；让飞机稳定是辅助顶升点的作用"
+            },
+            {
+              "n": 14,
+              "q": "The function of the auxiliary jacking points are to ______ after the airplane is jacked to the necessary height.",
+              "qzh": "飞机顶升到所需高度后，辅助顶升点的作用是______。",
+              "options": [
+                "make the airplane stable",
+                "lift and lower the airplane",
+                "lift the airplane higher"
+              ],
+              "optzh": [
+                "让飞机保持稳定",
+                "顶起和放下飞机",
+                "把飞机顶得更高"
+              ],
+              "answer": 0,
+              "explain": "auxiliary 辅助的；stable 稳定的"
+            },
+            {
+              "n": 15,
+              "q": "If you use jacks that have the same general specifications but are not designed for the 767, you must be careful. 这句话翻译为：______",
+              "qzh": "这句话怎么翻译？",
+              "options": [
+                "如果你使用通用规格相同、但不是专为767设计的千斤顶，你必须小心。",
+                "如果你使用通用规格相同、并且专为767设计的千斤顶，你必须小心。",
+                "如果你使用规格不同、但专为767设计的千斤顶，你必须小心。"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "general specifications 通用规格；not designed for 不是为……设计的"
+            },
+            {
+              "n": 16,
+              "q": "Towbarless Tow Vehicle 意思是：______",
+              "qzh": "Towbarless Tow Vehicle 的意思是______。",
+              "options": [
+                "无拖把拖车",
+                "有拖把拖车",
+                "拖车拖把"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "towbar 拖把，-less 表示“没有”；tow vehicle 拖车"
+            },
+            {
+              "n": 17,
+              "q": "Shear pin 意思是：______",
+              "qzh": "Shear pin 的意思是______。",
+              "options": [
+                "安全销",
+                "开口销",
+                "定位销"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "shear pin 剪切销（安全销），载荷过大时被剪断起保护作用；开口销是 cotter pin"
+            },
+            {
+              "n": 18,
+              "q": "The clearance must be between ______ and the adjacent airplane's ______.",
+              "qzh": "______和相邻飞机的______之间必须有间隙。",
+              "options": [
+                "APU exhaust port … wingtip",
+                "engine exhaust … tail",
+                "APU inlet … nose"
+              ],
+              "optzh": [
+                "APU 排气口 … 翼尖",
+                "发动机排气口 … 机尾",
+                "APU 进气口 … 机头"
+              ],
+              "answer": 0,
+              "explain": "APU exhaust port APU 排气口；adjacent 相邻的；wingtip 翼尖"
+            },
+            {
+              "n": 19,
+              "q": "Make sure you have the necessary clearance when you go near a parked airplane or other structures. 这句话翻译为：______",
+              "qzh": "这句话怎么翻译？",
+              "options": [
+                "当你走近一架停着的飞机或其他结构时，确保你们之间有必要的间隙。",
+                "当你走近一架停着的飞机或其他结构时，确保你得到了必要的许可。",
+                "当你离开一架停着的飞机或其他结构时，确保你们之间有必要的间隙。"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "clearance 在这里是“间隙、间距”，不是“许可”；go near 走近；parked 停放的"
+            },
+            {
+              "n": 20,
+              "q": "MOST TOWBARLESS TOW VEHICLES DO NOT HAVE A SHEAR PIN TO LIMIT THE LOADS IF THE AIRPLANE BRAKES ARE USED DURING TOWING. 这句话翻译为：______",
+              "qzh": "这句话怎么翻译？",
+              "options": [
+                "如果在拖行过程中使用飞机刹车，大部分无拖把拖车没有安全销来限制载荷。",
+                "大部分无拖把拖车都有安全销，在拖行过程中使用飞机刹车时可以限制载荷。",
+                "大部分无拖把拖车没有安全销，所以拖行过程中要使用飞机刹车来限制载荷。"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "do not have 没有；limit the loads 限制载荷；brakes 刹车"
+            },
+            {
+              "n": 21,
+              "q": "Safety precaution 意思是：______",
+              "qzh": "Safety precaution 的意思是______。",
+              "options": [
+                "安全预防措施",
+                "安全警告",
+                "安全检查"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "precaution 预防措施；警告是 warning，检查是 inspection"
+            }
+          ],
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 3。正确答案暂按参考答案（不是老师的），老师答案第5天发后核对；错误选项是整理时补的"
         },
         {
           "n": 4,
