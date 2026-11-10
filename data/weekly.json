@@ -1384,7 +1384,349 @@
           "n": 5,
           "title": "第5天",
           "items": [],
-          "questions": []
+          "questions": [
+            {
+              "n": 1,
+              "q": "The short form of \"alternating current\" is ______.",
+              "qzh": "\"alternating current\"（交流电）的缩写是______。",
+              "options": [
+                "AC",
+                "DC",
+                "ALT"
+              ],
+              "optzh": [
+                "交流电",
+                "直流电（direct current）",
+                "高度（altitude）"
+              ],
+              "answer": 0,
+              "explain": "AC = alternating current 交流电；DC = direct current 直流电"
+            },
+            {
+              "n": 2,
+              "q": "The full form of \"ACM\" is ______.",
+              "qzh": "\"ACM\" 的全称是______。",
+              "options": [
+                "Air cycle machine",
+                "Air conditioning module",
+                "Air control machine"
+              ],
+              "optzh": [
+                "空气循环机",
+                "空调模块",
+                "空气控制机"
+              ],
+              "answer": 0,
+              "explain": "ACM = air cycle machine 空气循环机，空调组件里的制冷部件"
+            },
+            {
+              "n": 3,
+              "q": "The short form of \"波音客改货\" is ______.",
+              "qzh": "“波音客改货”的缩写是______。",
+              "options": [
+                "BCF",
+                "BBJ",
+                "BCA"
+              ],
+              "optzh": [
+                "波音客改货（Boeing Converted Freighter）",
+                "波音公务机（Boeing Business Jet）",
+                "波音民用飞机集团（Boeing Commercial Airplanes）"
+              ],
+              "answer": 0,
+              "explain": "BCF = Boeing Converted Freighter 波音客改货；freighter 货机"
+            },
+            {
+              "n": 4,
+              "q": "\"LEFT SIDE FLT COMPT CEILING PANEL AND PASS COMPT CEILING\" means ______.",
+              "qzh": "\"LEFT SIDE FLT COMPT CEILING PANEL AND PASS COMPT CEILING\" 的意思是______。",
+              "options": [
+                "左手边驾驶舱天花板面板和客舱天花板面板",
+                "左手边驾驶舱天花板面板和货舱天花板面板",
+                "左手边驾驶舱地板面板和客舱天花板面板"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "FLT COMPT = flight compartment 驾驶舱；PASS COMPT = passenger compartment 客舱；ceiling panel 天花板面板"
+            },
+            {
+              "n": 5,
+              "q": "______ does not mean “高出地板大约1-3英寸”.",
+              "qzh": "______的意思不是“高出地板大约1-3英寸”。",
+              "options": [
+                "Appr 13 inches above the floor",
+                "approximately 13 inches above the floor",
+                "Approx 13 inches above the floor"
+              ],
+              "optzh": [
+                "Appr 不是 approximately 的缩写",
+                "approximately：大约（完整写法）",
+                "Approx：approximately 的缩写"
+              ],
+              "answer": 0,
+              "explain": "注意问的是“不是”。APPROX = approximately 大约；Appr 不是它的缩写（APPR 一般指 approach 进近）"
+            },
+            {
+              "n": 6,
+              "q": "______ is not the full form of \"FOD\".",
+              "qzh": "______不是 \"FOD\" 的全称。",
+              "options": [
+                "foreign object detection",
+                "foreign object damage",
+                "foreign object debris"
+              ],
+              "optzh": [
+                "外来物探测",
+                "外来物损伤",
+                "外来物碎片"
+              ],
+              "answer": 0,
+              "explain": "注意问的是“不是”。FOD 有两个全称：foreign object damage 外来物损伤、foreign object debris 外来物碎片，除了这两个都不对"
+            },
+            {
+              "n": 7,
+              "q": "______ means \"外部襟翼的前缘\".",
+              "qzh": "______的意思是“外部襟翼的前缘”。",
+              "options": [
+                "LE of OUTBD flap",
+                "TE of OUTBD flap",
+                "LE of INBD flap"
+              ],
+              "optzh": [
+                "外侧襟翼的前缘",
+                "外侧襟翼的后缘",
+                "内侧襟翼的前缘"
+              ],
+              "answer": 0,
+              "explain": "LE = leading edge 前缘，TE = trailing edge 后缘；OUTBD = outboard 外侧，INBD = inboard 内侧"
+            },
+            {
+              "n": 8,
+              "q": "“Turn the control wheel CW and then CCW”. According to the instruction, ______ is correct.",
+              "qzh": "“Turn the control wheel CW and then CCW”。根据这条指令，______是正确的。",
+              "options": [
+                "先顺时针再逆时针转动控制轮",
+                "先逆时针再顺时针转动控制轮",
+                "一直顺时针转动控制轮"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "CW = clockwise 顺时针；CCW = counterclockwise 逆时针；control wheel 控制轮（驾驶盘）"
+            },
+            {
+              "n": 9,
+              "q": "SB is short for ______.",
+              "qzh": "SB 是______的缩写。",
+              "options": [
+                "service bulletin",
+                "safety bulletin",
+                "service board"
+              ],
+              "optzh": [
+                "服务通告",
+                "安全通告",
+                "服务板"
+              ],
+              "answer": 0,
+              "explain": "SB = service bulletin 服务通告"
+            },
+            {
+              "n": 10,
+              "q": "The full form of \"IRS\" is ______.",
+              "qzh": "\"IRS\" 的全称是______。",
+              "options": [
+                "Inertial Reference System",
+                "Inertial Navigation System",
+                "Instrument Reference System"
+              ],
+              "optzh": [
+                "惯性基准系统",
+                "惯性导航系统（缩写是 INS）",
+                "仪表基准系统"
+              ],
+              "answer": 0,
+              "explain": "IRS = inertial reference system 惯性基准系统；惯性导航系统是 INS"
+            },
+            {
+              "n": 11,
+              "q": "When the engineers ask for TS support, they always raise a ______.",
+              "qzh": "工程师请求技术支援（TS）时，通常会提交一份______。",
+              "options": [
+                "TAR form",
+                "NRC form",
+                "SB form"
+              ],
+              "optzh": [
+                "技术援助申请单",
+                "非例行工卡",
+                "服务通告单"
+              ],
+              "answer": 0,
+              "explain": "TAR = Technical Assistance Request 技术援助申请；TS = technical services 技术支援；raise a form 提交表单"
+            },
+            {
+              "n": 12,
+              "q": "______ is the short form of \"美国联邦民航局\".",
+              "qzh": "______是“美国联邦民航局”的缩写。",
+              "options": [
+                "FAA",
+                "CAAC",
+                "EASA"
+              ],
+              "optzh": [
+                "美国联邦航空局（Federal Aviation Administration）",
+                "中国民用航空局",
+                "欧洲航空安全局"
+              ],
+              "answer": 0,
+              "explain": "FAA = Federal Aviation Administration 美国联邦航空局"
+            },
+            {
+              "n": 13,
+              "q": "The full form of \"CDU\" is ______.",
+              "qzh": "\"CDU\" 的全称是______。",
+              "options": [
+                "Control Display Unit",
+                "Central Display Unit",
+                "Control Data Unit"
+              ],
+              "optzh": [
+                "控制显示组件",
+                "中央显示组件",
+                "控制数据组件"
+              ],
+              "answer": 0,
+              "explain": "CDU = control display unit 控制显示组件"
+            },
+            {
+              "n": 14,
+              "q": "PTT switches are located at all flight interphone stations. PTT stands for ______.",
+              "qzh": "所有飞行内话站位都有 PTT 电门。PTT 代表______。",
+              "options": [
+                "push to talk",
+                "push to test",
+                "pull to talk"
+              ],
+              "optzh": [
+                "按下通话",
+                "按下测试",
+                "拉出通话"
+              ],
+              "answer": 0,
+              "explain": "PTT = push to talk 按下通话；flight interphone 飞行内话"
+            },
+            {
+              "n": 15,
+              "q": "______ is opposite to AFT.",
+              "qzh": "______和 AFT 相反。",
+              "options": [
+                "FWD",
+                "OUTBD",
+                "UPR"
+              ],
+              "optzh": [
+                "前（forward）",
+                "外侧（outboard）",
+                "上（upper）"
+              ],
+              "answer": 0,
+              "explain": "AFT 后；FWD = forward 前"
+            },
+            {
+              "n": 16,
+              "q": "The short form of \"总温\" is ______.",
+              "qzh": "“总温”的缩写是______。",
+              "options": [
+                "TAT",
+                "SAT",
+                "OAT"
+              ],
+              "optzh": [
+                "总温（total air temperature）",
+                "静温（static air temperature）",
+                "外界大气温度（outside air temperature）"
+              ],
+              "answer": 0,
+              "explain": "TAT = total air temperature 总温；SAT 静温"
+            },
+            {
+              "n": 17,
+              "q": "The full form of \"TE\" is ______.",
+              "qzh": "\"TE\" 的全称是______。",
+              "options": [
+                "trailing edge",
+                "leading edge",
+                "tail edge"
+              ],
+              "optzh": [
+                "后缘",
+                "前缘（缩写是 LE）",
+                "尾部边缘"
+              ],
+              "answer": 0,
+              "explain": "TE = trailing edge 后缘；LE = leading edge 前缘"
+            },
+            {
+              "n": 18,
+              "q": "The short form of \"驾驶舱\" is ______.",
+              "qzh": "“驾驶舱”的缩写是______。",
+              "options": [
+                "FLT COMPT",
+                "PASS COMPT",
+                "CARGO COMPT"
+              ],
+              "optzh": [
+                "驾驶舱（flight compartment）",
+                "客舱（passenger compartment）",
+                "货舱（cargo compartment）"
+              ],
+              "answer": 0,
+              "explain": "FLT COMPT = flight compartment 驾驶舱"
+            },
+            {
+              "n": 19,
+              "q": "______ is the angle between the body's reference line and the oncoming flow.",
+              "qzh": "______是机体基准线和迎面气流之间的夹角。",
+              "options": [
+                "AOA",
+                "AOB",
+                "AOS"
+              ],
+              "optzh": [
+                "迎角（angle of attack）",
+                "坡度角（angle of bank）",
+                "侧滑角（angle of sideslip）"
+              ],
+              "answer": 0,
+              "explain": "AOA = angle of attack 迎角；oncoming flow 迎面气流"
+            },
+            {
+              "n": 20,
+              "q": "I/B Elevator (LH) means ______.",
+              "qzh": "I/B Elevator (LH) 的意思是______。",
+              "options": [
+                "内侧升降舵（左手边）",
+                "外侧升降舵（左手边）",
+                "内侧升降舵（右手边）"
+              ],
+              "optzh": [
+                "",
+                "",
+                ""
+              ],
+              "answer": 0,
+              "explain": "I/B = inboard 内侧，O/B = outboard 外侧；elevator 升降舵；LH = left hand 左，RH 右"
+            }
+          ],
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 5。正确答案按老师给的；第5题是老师的原选项，第6题两个正确全称是老师给的、要选的第三个选项是整理时补的，其余题的错误选项是整理时补的"
         }
       ]
     }
