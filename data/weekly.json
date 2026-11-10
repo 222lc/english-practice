@@ -1110,17 +1110,17 @@
               "q": "The air that is ______ by a ground cart is supplied to the airplane's main air distribution system through a conditioned air ground connector.",
               "qzh": "由地面空调车______的空气，通过空调地面接头供给飞机的主空气分配系统。",
               "options": [
-                "preconditioned",
+                "conditioned",
                 "pressurized",
                 "recirculated"
               ],
               "optzh": [
-                "预先调节好的",
+                "调节好的（空调过的）",
                 "增压的",
                 "再循环的"
               ],
               "answer": 0,
-              "explain": "preconditioned 预先调节（温度）的；ground cart 地面空调车；conditioned air ground connector 空调地面接头"
+              "explain": "conditioned 调节过（温度）的，conditioned air 空调空气；ground cart 地面空调车；conditioned air ground connector 空调地面接头"
             },
             {
               "n": 2,
@@ -1128,13 +1128,13 @@
               "qzh": "空调地面接头是一个组件，由______组成，它安装在一个内部带单向活门的管道组件上。",
               "options": [
                 "an adapter and seat assembly",
-                "an adapter and clamp assembly",
-                "a flange and seal assembly"
+                "a screw and a washer",
+                "a washer and a nut"
               ],
               "optzh": [
                 "接头和座组件",
-                "接头和卡箍组件",
-                "法兰和密封件组件"
+                "一个螺钉和一个垫圈",
+                "一个垫圈和一个螺母"
               ],
               "answer": 0,
               "explain": "adapter and seat assembly 接头和座组件；duct assembly 管道组件；check valve 单向活门"
@@ -1161,8 +1161,8 @@
               "q": "Turn the L PACK selector, ______, P5, to the OFF position.",
               "qzh": "把______（P5）的左空调组件（L PACK）选择器转到 OFF 位。",
               "options": [
-                "on the pilots' overhead panel",
-                "on the pilots' center instrument panel",
+                "on the pilot's overhead panel",
+                "on the pilot's center instrument panel",
                 "on the aft electronic panel"
               ],
               "optzh": [
@@ -1229,41 +1229,41 @@
               "q": "______ are in the ceiling, and are used to store carry-on luggage, coats and garment bags.",
               "qzh": "______在天花板上，用来存放随身行李、外套和衣物袋。",
               "options": [
-                "Overhead stowage bins",
-                "Passenger service units",
-                "Closets"
+                "Overhead storage compartments",
+                "Closets",
+                "Service units"
               ],
               "optzh": [
                 "头顶行李箱",
-                "旅客服务组件（PSU）",
-                "衣帽间"
+                "衣帽间",
+                "服务组件"
               ],
               "answer": 0,
-              "explain": "overhead stowage bin 头顶行李箱；carry-on luggage 随身行李；garment bag 衣物袋"
+              "explain": "overhead storage compartment 头顶行李箱（头顶储物舱）；closet 衣帽间不在天花板上；carry-on luggage 随身行李；garment bag 衣物袋"
             },
             {
               "n": 9,
               "q": "Emergency, AMM25-60-00: procedures for ______.",
               "qzh": "应急，AMM25-60-00：______的程序。",
               "options": [
-                "emergency equipment",
-                "cargo compartments",
-                "lavatories"
+                "escape and life saving equipment",
+                "fire protection equipment",
+                "cargo loading equipment"
               ],
               "optzh": [
-                "应急设备",
-                "货舱",
-                "厕所"
+                "逃生和救生设备",
+                "防火设备",
+                "货物装载设备"
               ],
               "answer": 0,
-              "explain": "ATA 25-60 是应急设备（emergency equipment）；25-50 货舱，25-40 厕所"
+              "explain": "AMM 25-60 应急设备：escape 逃生，life saving equipment 救生设备；防火是第26章"
             },
             {
               "n": 10,
               "q": "______ in the flight compartment provide means of escape through flight compartment windows.",
               "qzh": "驾驶舱里的______提供了从驾驶舱窗户逃生的手段。",
               "options": [
-                "Escape lanyards",
+                "Escape ropes",
                 "Escape slides",
                 "Life vests"
               ],
@@ -1273,89 +1273,89 @@
                 "救生衣"
               ],
               "answer": 0,
-              "explain": "escape lanyard 逃生绳，从驾驶舱窗户逃生用；escape slide 逃生滑梯装在舱门上"
+              "explain": "escape rope 逃生绳，从驾驶舱窗户逃生用；escape slide 逃生滑梯装在舱门上"
             },
             {
               "n": 11,
               "q": "The door-mounted escape slides are stored ______.",
               "qzh": "装在舱门上的逃生滑梯存放______。",
               "options": [
-                "in the lower part of the doors",
-                "in the ceiling above the doors",
-                "in the floor under the doors"
+                "in the entry service doors",
+                "in the cargo doors",
+                "in the flight compartment"
               ],
               "optzh": [
-                "在舱门的下部",
-                "在舱门上方的天花板里",
-                "在舱门下方的地板里"
+                "在登机门和勤务门里",
+                "在货舱门里",
+                "在驾驶舱里"
               ],
               "answer": 0,
-              "explain": "door-mounted 装在舱门上的；escape slide 逃生滑梯；滑梯包装在舱门内侧下部"
+              "explain": "door-mounted 装在舱门上的；escape slide 逃生滑梯；entry door 登机门，service door 勤务门"
             },
             {
               "n": 12,
               "q": "Static dischargers discharge static buildup at ______.",
-              "qzh": "静电放电刷以______释放积聚的静电。",
+              "qzh": "静电放电刷在______释放积聚的静电。",
               "options": [
-                "low current levels",
-                "high current levels",
-                "low temperature"
+                "the trailing edges of the airplane",
+                "the leading edges of the airplane",
+                "the edges of the airplane"
               ],
               "optzh": [
-                "小电流",
-                "大电流",
-                "低温"
+                "飞机的后缘",
+                "飞机的前缘",
+                "飞机的边缘"
               ],
               "answer": 0,
-              "explain": "static discharger 静电放电刷；static buildup 静电积聚；以小电流放电可以减少对无线电的干扰"
+              "explain": "static discharger 静电放电刷，装在机翼和尾翼的后缘；trailing edge 后缘，leading edge 前缘；static buildup 静电积聚"
             },
             {
               "n": 13,
               "q": "WARNING: USE EXTREME CARE WHEN YOU DRAIN THE IDG OIL. WEAR SPLASH GOGGLES, INSULATED GLOVES, AND PROTECTION GEAR. CONTACT WITH HOT OIL CAN CAUSE SERIOUS INJURY. According to the WARNING, you should wear ______ when you drain the IDG oil.",
-              "qzh": "警告：放 IDG 滑油时要格外小心。戴防溅护目镜、隔热手套和防护装备。接触热滑油会造成严重伤害。根据警告，放 IDG 滑油时应该穿戴______。",
+              "qzh": "警告：放 IDG 滑油时要格外小心。穿戴 splash goggles、insulated gloves 和 protection gear。接触热滑油会造成严重伤害。根据警告，放 IDG 滑油时应该穿戴______。",
               "options": [
-                "splash goggles, insulated gloves, and protection gear",
-                "splash goggles, rubber gloves, and ear protection",
-                "a safety helmet, insulated gloves, and a respirator"
+                "防溅型护目镜、绝缘手套和防护服",
+                "防溅型护目镜、棉手套和防护服",
+                "防溅型护目镜、绝缘手套和耳塞"
               ],
               "optzh": [
-                "防溅护目镜、隔热手套和防护装备",
-                "防溅护目镜、橡胶手套和护耳用品",
-                "安全帽、隔热手套和呼吸面罩"
+                "",
+                "",
+                ""
               ],
               "answer": 0,
-              "explain": "splash goggles 防溅护目镜；insulated gloves 隔热手套；protection gear 防护装备；IDG 整体驱动发电机"
+              "explain": "splash goggles 防溅型护目镜；insulated gloves 绝缘手套；protection gear 防护服；IDG 整体驱动发电机"
             },
             {
               "n": 14,
-              "q": "Disconnect the oil-out line first at the check valve and then at the IDG. This requires loosening of the butterfly clamp that supports the oil line and nearby wire bundle. According to the instructions, the statement suggests that ______.",
-              "qzh": "先在单向活门处、再在 IDG 处断开出油管。这需要松开支撑油管和附近导线束的蝶形卡箍。根据这段说明，这句话的意思是______。",
+              "q": "Disconnect the oil-out line first at the check valve and then at the IDG. This requires loosening of the butterfly clamp that supports the oil line and nearby wire bundle. According to the instructions, which is wrong?",
+              "qzh": "先在单向活门处、再在 IDG 处断开出油管。这需要松开支撑油管和附近导线束的蝶形卡箍。根据这段说明，哪一项是错的？",
               "options": [
-                "you need to loosen the butterfly clamp to disconnect the oil-out line",
-                "you need to remove the wire bundle to disconnect the oil-out line",
-                "you should disconnect the oil-out line at the IDG first"
+                "You should first disconnect the oil-out line at the IDG.",
+                "You should first disconnect the oil-out line at the check valve.",
+                "If you want to disconnect the oil-out line, you should loosen the butterfly clamp."
               ],
               "optzh": [
-                "要断开出油管，需要松开蝶形卡箍",
-                "要断开出油管，需要拆下导线束",
-                "应该先在 IDG 处断开出油管"
+                "应该先在 IDG 处断开出油管。",
+                "应该先在单向活门处断开出油管。",
+                "要断开出油管，应该松开蝶形卡箍。"
               ],
               "answer": 0,
-              "explain": "oil-out line 出油管；loosen 松开（不是拆下）；butterfly clamp 蝶形卡箍；wire bundle 导线束；顺序是先单向活门、后 IDG"
+              "explain": "注意问的是哪一项错。顺序是先单向活门（check valve）、后 IDG，所以“先在 IDG 处断开”是错的；oil-out line 出油管；butterfly clamp 蝶形卡箍"
             },
             {
               "n": 15,
               "q": "DO NOT SUPPLY MORE LIFT THAN NECESSARY TO HOLD THE IDG. EXCESSIVE LIFT OR FAILURE TO HOLD THE IDG PROPERLY CAN DAMAGE THE INPUT SEAL. According to the Caution, we should ______.",
               "qzh": "托住 IDG 时不要施加超过需要的托举力。托举力过大或没有正确托住 IDG 都会损坏输入端封严。根据这条注意事项，我们应该______。",
               "options": [
-                "supply only the lift necessary to hold the IDG",
-                "supply as much lift as possible to hold the IDG",
-                "not supply any lift to hold the IDG"
+                "supply only necessary lift to hold the IDG",
+                "supply a little greater than necessary lift to hold the IDG",
+                "supply a little less than necessary lift to hold the IDG"
               ],
               "optzh": [
                 "只施加托住 IDG 所需要的托举力",
-                "尽量多施加托举力来托住 IDG",
-                "不施加任何托举力来托住 IDG"
+                "施加比需要稍大一点的托举力来托住 IDG",
+                "施加比需要稍小一点的托举力来托住 IDG"
               ],
               "answer": 0,
               "explain": "more than necessary 超过需要的；excessive 过大的；input seal 输入端封严。力太大、托不住都不行"
@@ -1365,9 +1365,9 @@
               "q": "DO NOT USE THE IDG INPUT SHAFT FOR LIFTING THE IDG. THIS WILL DAMAGE THE SHAFT. 这句话翻译为：______",
               "qzh": "这句话怎么翻译？",
               "options": [
-                "不要用 IDG 的输入轴来抬起 IDG，这会损坏输入轴。",
-                "不要用 IDG 的输出轴来抬起 IDG，这会损坏输出轴。",
-                "抬起 IDG 时要使用 IDG 的输入轴，否则会损坏输入轴。"
+                "不要使用IDG的输入轴来举起IDG。这样会损坏这个轴。",
+                "不要使用IDG的输出轴来举起IDG。这样会损坏这个轴。",
+                "要使用IDG的输入轴来举起IDG。否则会损坏这个轴。"
               ],
               "optzh": [
                 "",
@@ -1375,10 +1375,10 @@
                 ""
               ],
               "answer": 0,
-              "explain": "input shaft 输入轴；lift 抬起；DO NOT USE ... FOR ... 不要用……来……"
+              "explain": "input shaft 输入轴；lift 举起；DO NOT USE ... FOR ... 不要用……来……"
             }
           ],
-          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 4。正确答案暂按整理时的判断（老师答案还没发），老师答案到了以后核对；错误选项是整理时补的"
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 4。正确答案按老师给的；第2、8、12、13、14、15题是老师的原选项，其余题的错误选项是整理时补的"
         },
         {
           "n": 5,
