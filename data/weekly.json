@@ -898,9 +898,9 @@
               "q": "The plane is measured from a point 92.50 inches forward of the nose. 这句话翻译为：______",
               "qzh": "这句话怎么翻译？",
               "options": [
-                "此参照面从机头前方92.50英寸处开始测量。",
-                "此参照面从机头后方92.50英寸处开始测量。",
-                "此参照面从机头前方92.50厘米处开始测量。"
+                "此参照面由机头前方92.50英寸处开始测量。",
+                "此参照面由机头后方92.50英寸处开始测量。",
+                "此参照面由机头前方92.50厘米处开始测量。"
               ],
               "optzh": [
                 "",
@@ -908,7 +908,7 @@
                 ""
               ],
               "answer": 0,
-              "explain": "forward of the nose 机头前方；inch 英寸"
+              "explain": "forward of the nose 机头前方；inch 英寸；正确选项是老师的原译文"
             },
             {
               "n": 11,
@@ -932,17 +932,17 @@
               "q": "Which one is the primary jacking point?",
               "qzh": "哪一个是主顶升点？",
               "options": [
-                "Right wing root",
-                "Right wing tip",
-                "Tail"
+                "right wing root",
+                "left wing center point",
+                "nose"
               ],
               "optzh": [
                 "右机翼翼根",
-                "右机翼翼尖",
-                "机尾"
+                "左机翼中点",
+                "机头"
               ],
               "answer": 0,
-              "explain": "primary jacking point 主顶升点；wing root 翼根，wing tip 翼尖"
+              "explain": "primary jacking point 主顶升点；wing root 翼根；nose 机头。三个选项是老师的原选项"
             },
             {
               "n": 13,
@@ -983,9 +983,9 @@
               "q": "If you use jacks that have the same general specifications but are not designed for the 767, you must be careful. 这句话翻译为：______",
               "qzh": "这句话怎么翻译？",
               "options": [
-                "如果你使用通用规格相同、但不是专为767设计的千斤顶，你必须小心。",
-                "如果你使用通用规格相同、并且专为767设计的千斤顶，你必须小心。",
-                "如果你使用规格不同、但专为767设计的千斤顶，你必须小心。"
+                "如果你使用规格相同通用的但不是特别为767飞机定制的千斤顶，你必须小心。",
+                "如果你使用规格相同通用的并且是特别为767飞机定制的千斤顶，你必须小心。",
+                "如果你使用规格不同的但是特别为767飞机定制的千斤顶，你必须小心。"
               ],
               "optzh": [
                 "",
@@ -993,7 +993,7 @@
                 ""
               ],
               "answer": 0,
-              "explain": "general specifications 通用规格；not designed for 不是为……设计的"
+              "explain": "general specifications 通用规格；not designed for 不是为……设计（定制）的；正确选项是老师的原译文"
             },
             {
               "n": 16,
@@ -1051,9 +1051,9 @@
               "q": "Make sure you have the necessary clearance when you go near a parked airplane or other structures. 这句话翻译为：______",
               "qzh": "这句话怎么翻译？",
               "options": [
-                "当你走近一架停着的飞机或其他结构时，确保你们之间有必要的间隙。",
-                "当你走近一架停着的飞机或其他结构时，确保你得到了必要的许可。",
-                "当你离开一架停着的飞机或其他结构时，确保你们之间有必要的间隙。"
+                "当你走近一架停着的飞机或其它结构时，确保你们之间有必要的间隙。",
+                "当你走近一架停着的飞机或其它结构时，确保你得到了必要的许可。",
+                "当你离开一架停着的飞机或其它结构时，确保你们之间有必要的间隙。"
               ],
               "optzh": [
                 "",
@@ -1061,16 +1061,16 @@
                 ""
               ],
               "answer": 0,
-              "explain": "clearance 在这里是“间隙、间距”，不是“许可”；go near 走近；parked 停放的"
+              "explain": "clearance 在这里是“间隙、间距”，不是“许可”；go near 走近；parked 停放的；正确选项是老师的原译文"
             },
             {
               "n": 20,
               "q": "MOST TOWBARLESS TOW VEHICLES DO NOT HAVE A SHEAR PIN TO LIMIT THE LOADS IF THE AIRPLANE BRAKES ARE USED DURING TOWING. 这句话翻译为：______",
               "qzh": "这句话怎么翻译？",
               "options": [
-                "如果在拖行过程中使用飞机刹车，大部分无拖把拖车没有安全销来限制载荷。",
-                "大部分无拖把拖车都有安全销，在拖行过程中使用飞机刹车时可以限制载荷。",
-                "大部分无拖把拖车没有安全销，所以拖行过程中要使用飞机刹车来限制载荷。"
+                "如果在拖车过程中运用飞机刹车的话，大部分无拖把拖车没有安全销来限制负载。",
+                "大部分无拖把拖车都有安全销，在拖车过程中运用飞机刹车的话可以限制负载。",
+                "大部分无拖把拖车没有安全销，所以在拖车过程中要运用飞机刹车来限制负载。"
               ],
               "optzh": [
                 "",
@@ -1078,7 +1078,7 @@
                 ""
               ],
               "answer": 0,
-              "explain": "do not have 没有；limit the loads 限制载荷；brakes 刹车"
+              "explain": "do not have 没有；limit the loads 限制负载（载荷）；brakes 刹车；正确选项是老师的原译文"
             },
             {
               "n": 21,
@@ -1098,7 +1098,7 @@
               "explain": "precaution 预防措施；警告是 warning，检查是 inspection"
             }
           ],
-          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 3。正确答案暂按参考答案（不是老师的），老师答案第5天发后核对；错误选项是整理时补的"
+          "note": "Technical English of Aircraft Maintenance for General Mechanics Exercise - Day 3。正确答案按老师给的；第12题是老师的原选项，其余题的错误选项是整理时补的；第10、15、19、20题的正确译文用老师的原话"
         },
         {
           "n": 4,
